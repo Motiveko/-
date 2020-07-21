@@ -8,9 +8,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import kr.co.motiveko.eatgo.domain.RestaurantRepository;
+import kr.co.motiveko.eatgo.domain.RestaurantRepositoryImpl;
 
 
 @RunWith(SpringRunner.class) // spring runner를 이용해서 테스트한다.
@@ -19,7 +24,12 @@ public class RestaurantControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
-
+	
+	// @SpringBootApplication 에서는 controller에 의존성 주입 등이 잘 되지만 Test에서는 controller만 가져와서 안되는듯하다.
+	// 이렇게 ControllerTest에 @SpyBean을 이용해 넣어주면 자동으로 찾아간다.
+	@SpyBean(RestaurantRepositoryImpl.class) //interface를 @SpyBean할 때는 괄호에 구현채.class를 넣어줘야한다.
+	private RestaurantRepository repository;
+	
 	@Test
 	public void list() throws Exception {
 		mvc.perform(get("/restaurants"))

@@ -4,11 +4,13 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class RestaurantTests {
 
 	@Test
 	public void creation() {
+		
 		Restaurant restaurant = new Restaurant(1004L ,"Bob zip","Seoul");
 		// assertThat(a,b) -> a=b여야한다.
 		
