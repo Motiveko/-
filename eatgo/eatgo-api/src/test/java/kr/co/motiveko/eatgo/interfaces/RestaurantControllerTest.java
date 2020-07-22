@@ -5,19 +5,22 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import kr.co.motiveko.eatgo.application.RestaurantService;
-import kr.co.motiveko.eatgo.domain.MenuItemRepository;
-import kr.co.motiveko.eatgo.domain.MenuItemRepositoryImpl;
-import kr.co.motiveko.eatgo.domain.RestaurantRepository;
-import kr.co.motiveko.eatgo.domain.RestaurantRepositoryImpl;
+import kr.co.motiveko.eatgo.domain.MenuItem;
+import kr.co.motiveko.eatgo.domain.Restaurant;
 
 
 @RunWith(SpringRunner.class) // spring runner를 이용해서 테스트한다.
@@ -27,19 +30,29 @@ public class RestaurantControllerTest {
 	@Autowired
 	private MockMvc mvc;
 	
-	// @SpringBootApplication 에서는 controller에 의존성 주입 등이 잘 되지만 Test에서는 controller만 가져와서 안되는듯하다.
-	// 이렇게 ControllerTest에 @SpyBean을 이용해 넣어주면 자동으로 찾아간다.
-	@SpyBean(RestaurantRepositoryImpl.class) //interface를 @SpyBean할 때는 괄호에 구현채.class를 넣어줘야한다.
-	private RestaurantRepository repository;
-//	
-	@SpyBean(MenuItemRepositoryImpl.class)
-	private MenuItemRepository menuItemRepository;
 	
-	@SpyBean
-	private RestaurantService restaurantService;
+	// Mock Object : 가짜 객체
+	// Mockito : Mock Object Framework
+	// 가짜객체이므로 안에 di된 repository를 실제루 사용하지 않으므로 안넣어줘도 된다.
+	@MockBean 
+	private RestaurantService restaurantService; 
 	
 	@Test
 	public void list() throws Exception {
+		
+		
+		// 이렇게 직접 가짜프로세스를 만들어 준 대로 테스트를 하게 되는데 그 이유는
+		// Controller가 Servie 객체를 잘 활용 한다는것을 테스트 하는 것이지 (Controller 객체 그 자체의 기능) 
+		// Service객체가 잘 동작하는지의 여부가 관심사가 아니기 때문이다.
+		// 실제 서버가 돌아가며 서비스하고 있는 중에 테스트를 해야 한다고 할 때 이렇게 가짜로 만들어서 테스트 해야민 한다.
+		List<Restaurant> restaurants = new ArrayList<>();
+		restaurants.add(new Restaurant(1004L, "Bob zip", "Seoul"));
+		
+		// given() : static method from org.mockito.BDDMockito
+		given(restaurantService.getRestaurants()).willReturn(restaurants);
+		
+		restaurantService.getRestaurants();
+		
 		mvc.perform(get("/restaurants"))
 			.andExpect(status().isOk())
 			.andExpect(content().string(containsString("\"name\":\"Bob zip\"")))
@@ -48,6 +61,15 @@ public class RestaurantControllerTest {
 	
 	@Test
 	public void detail() throws Exception {
+		
+		Restaurant restaurant1 = new Restaurant(1004L, "Bob zip", "Seoul");
+		restaurant1.addMenuItem(new MenuItem("Kimchi"));
+		given(restaurantService.getRestaurant(1004L)).willReturn(restaurant1);
+
+		Restaurant restaurant2 = new Restaurant(2020L, "Cyber Food", "Seoul");
+		given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
+		
+		
 		mvc.perform(get("/restaurants/1004"))
 			.andExpect(status().isOk())
 			.andExpect(content().string(containsString("\"name\":\"Bob zip\"")))

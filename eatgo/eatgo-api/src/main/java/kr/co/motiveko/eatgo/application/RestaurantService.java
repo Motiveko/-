@@ -17,17 +17,17 @@ public class RestaurantService {
 	RestaurantRepository restaurantRepository;
 	
 	@Autowired
-	MenuItemRepository menuItemReposiory;
+	MenuItemRepository menuItemRepository;
 	
 	public RestaurantService(RestaurantRepository restaurantRepository, 
 								MenuItemRepository menuItemReposiory) {
 		this.restaurantRepository = restaurantRepository;
-		this.menuItemReposiory = menuItemReposiory;
+		this.menuItemRepository = menuItemReposiory;
 	}
 
 	public Restaurant getRestaurant(Long id) {
 		Restaurant restaurant = restaurantRepository.findById(id);
-		List<MenuItem> menuItems = menuItemReposiory.findAllByRestaurantId(id);
+		List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
 		restaurant.setMenuItems(menuItems);		
 		
 		return restaurant;

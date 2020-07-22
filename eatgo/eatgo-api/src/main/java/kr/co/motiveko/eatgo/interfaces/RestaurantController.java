@@ -15,9 +15,10 @@ import kr.co.motiveko.eatgo.domain.RestaurantRepository;
 
 @RestController 
 public class RestaurantController {
-	
-	// Controller : Layerd Architecture 에서 UI Layer에 해당
-	// Repository : Domain Layer
+	//Layerd Architecture 
+	// Controller : UI ( Presentational) Layer
+	// Service : Business Layer?
+	// Repository : Domain (Persistence) Layer
 
 	@Autowired
 	RestaurantService restaurantService;
