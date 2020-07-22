@@ -20,10 +20,9 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 	public List<Restaurant> findAll() {
 		return restaurants;
 	}
-
+	
 	@Override
 	public Restaurant findById(Long id) {
-		
 		Restaurant restaurant = restaurants.stream() // Stream<Restaurant>
 										.filter( r -> r.getId().equals(id)) // Stream<Restaurant>
 										.findFirst()	//Optional<Restaurant>
@@ -31,5 +30,4 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 														// get() : 객체반환, orElse(a) : empty일 경우 a반환
 		return restaurant;
 	}	
-
 }

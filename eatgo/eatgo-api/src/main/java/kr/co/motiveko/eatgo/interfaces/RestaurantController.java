@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.motiveko.eatgo.application.RestaurantService;
+import kr.co.motiveko.eatgo.domain.MenuItem;
+import kr.co.motiveko.eatgo.domain.MenuItemRepository;
 import kr.co.motiveko.eatgo.domain.Restaurant;
 import kr.co.motiveko.eatgo.domain.RestaurantRepository;
 
@@ -15,14 +18,14 @@ public class RestaurantController {
 	
 	// Controller : Layerd Architecture 에서 UI Layer에 해당
 	// Repository : Domain Layer
-	@Autowired
-	private RestaurantRepository repository;
 
+	@Autowired
+	RestaurantService restaurantService;
+	
+	
 	@GetMapping("/restaurants")
 	public List<Restaurant> list() {
-		
-		List<Restaurant> restaurants = repository.findAll();
-
+		List<Restaurant> restaurants = restaurantService.getRestaurants();
 		return restaurants;
 	}
 	
@@ -31,7 +34,10 @@ public class RestaurantController {
 	@GetMapping("/restaurants/{id}")
 	public Restaurant detail( @PathVariable("id") Long id) {
 		
-		Restaurant restaurant = repository.findById(id);		
+		Restaurant restaurant = restaurantService.getRestaurant(id);
+		
+//		List<MenuItem> menuItems = menuItemReposiory.findAllByRestaurantId(id);
+//		restaurant.setMenuItems(menuItems);
 		
 		return restaurant;
 	}
