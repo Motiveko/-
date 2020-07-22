@@ -1,10 +1,15 @@
 package kr.co.motiveko.eatgo.interfaces;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.motiveko.eatgo.application.RestaurantService;
@@ -17,7 +22,7 @@ import kr.co.motiveko.eatgo.domain.RestaurantRepository;
 public class RestaurantController {
 	//Layerd Architecture 
 	// Controller : UI ( Presentational) Layer
-	// Service : Business Layer?
+	// Service : Application(Business) Layer?
 	// Repository : Domain (Persistence) Layer
 
 	@Autowired
@@ -42,4 +47,23 @@ public class RestaurantController {
 		
 		return restaurant;
 	}
+	
+	// 가게 생성
+	// POST, /restaurant, HTTP Status 201(Created), Header-Location 에 만든 정보를 담아 보낸다.
+	// Client - 받은 정보를 JsonParser가 돌아가게 만든다. 없으면 Empty{} 를 돌려준다.
+	// HTTPie(Postman 비슷한거)
+	@PostMapping("/restaurants")
+	public ResponseEntity<?> create(@RequestBody Restaurant resource) throws URISyntaxException {
+		
+		// https://blog.naver.com/rapa100g/222030752263 URI <-> URL
+		String name = resource.getName();
+		String address = resource.getAddress();
+		Restaurant restaurant = new Restaurant(1234L, name, address);
+		
+		URI location = new URI("/restaurants/" + restaurant.getId());
+		
+		restaurantService.addRestaurant(restaurant );
+		return ResponseEntity.created(location).body("{}");
+	}
+	
 }

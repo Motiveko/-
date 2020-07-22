@@ -1,20 +1,27 @@
 package kr.co.motiveko.eatgo.interfaces;
 
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,8 +36,7 @@ public class RestaurantControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
-	
-	
+		
 	// Mock Object : 가짜 객체
 	// Mockito : Mock Object Framework
 	// 가짜객체이므로 안에 di된 repository를 실제루 사용하지 않으므로 안넣어줘도 된다.
@@ -38,9 +44,7 @@ public class RestaurantControllerTest {
 	private RestaurantService restaurantService; 
 	
 	@Test
-	public void list() throws Exception {
-		
-		
+	public void list() throws Exception {		
 		// 이렇게 직접 가짜프로세스를 만들어 준 대로 테스트를 하게 되는데 그 이유는
 		// Controller가 Servie 객체를 잘 활용 한다는것을 테스트 하는 것이지 (Controller 객체 그 자체의 기능) 
 		// Service객체가 잘 동작하는지의 여부가 관심사가 아니기 때문이다.
@@ -69,7 +73,6 @@ public class RestaurantControllerTest {
 		Restaurant restaurant2 = new Restaurant(2020L, "Cyber Food", "Seoul");
 		given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
 		
-		
 		mvc.perform(get("/restaurants/1004"))
 			.andExpect(status().isOk())
 			.andExpect(content().string(containsString("\"name\":\"Bob zip\"")))
@@ -77,9 +80,24 @@ public class RestaurantControllerTest {
 			.andExpect(content().string(containsString("Kimchi")));
 		
 		mvc.perform(get("/restaurants/2020"))
-		.andExpect(status().isOk())
-		.andExpect(content().string(containsString("\"id\":2020")))
-		.andExpect(content().string(containsString("\"name\":\"Cyber Food\"")));
+			.andExpect(status().isOk())
+			.andExpect(content().string(containsString("\"id\":2020")))
+			.andExpect(content().string(containsString("\"name\":\"Cyber Food\"")));
 	}
+	
+	
+	@Test
+	public void create() throws Exception {
 
+		mvc.perform(post("/restaurants")
+			.contentType(MediaType.APPLICATION_JSON)				  // json 타입이냐
+			.content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}")) //
+			.andExpect(status().isCreated())
+			.andExpect(header().string("location", "/restaurants/1234"))
+			.andExpect(content().string("{}"));
+
+		//요것이 한번 실행되는지 검사, any()는 아무거나 들어와도 된다의 표시
+		verify(restaurantService).addRestaurant(any());
+	}
+	
 }
