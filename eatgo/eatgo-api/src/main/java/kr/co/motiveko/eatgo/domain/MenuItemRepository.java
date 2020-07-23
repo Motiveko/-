@@ -22,7 +22,7 @@ public interface MenuItemRepository extends CrudRepository<MenuItem, Long>{
 	 * @Id 가 붙은 Identifier가 필요하다.
 	 * Id는 @GeneratedValue로 자동생성이 가능하다.
 	 * 
-	 * DTO 객체는 Optional<T> 형식으로 반환되어야 한다.
+	 * CrudRepository에는 find, findAll, save등이 있다. method명을 여기 맞춰주면 된다.
 	 * 
 	 * 코드가 매우 깔끔하게 만들어진다.
 	 */
