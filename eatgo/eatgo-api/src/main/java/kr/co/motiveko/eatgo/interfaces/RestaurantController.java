@@ -58,7 +58,7 @@ public class RestaurantController {
 		// https://blog.naver.com/rapa100g/222030752263 URI <-> URL
 		String name = resource.getName();
 		String address = resource.getAddress();
-		Restaurant restaurant = new Restaurant(1234L, name, address);
+		Restaurant restaurant = new Restaurant(name, address);
 		
 		URI location = new URI("/restaurants/" + restaurant.getId());
 		

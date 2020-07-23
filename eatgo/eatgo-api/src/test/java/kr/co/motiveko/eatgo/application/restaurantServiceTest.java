@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +58,7 @@ public class restaurantServiceTest {
 		// getRestaurants()
 		given(restaurantRepository.findAll()).willReturn(restaurants);
 		// getRestaurant()
-		given(restaurantRepository.findById(1004L)).willReturn(restaurant);
+		given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
 		
 	}
 
