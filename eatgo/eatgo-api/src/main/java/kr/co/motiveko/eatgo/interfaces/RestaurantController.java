@@ -21,7 +21,7 @@ import kr.co.motiveko.eatgo.domain.RestaurantRepository;
 @RestController 
 public class RestaurantController {
 	//Layerd Architecture 
-	// Controller : UI ( Presentational) Layer
+	// Controller : UI (Interface, Presentational) Layer
 	// Service : Application(Business) Layer?
 	// Repository : Domain (Persistence) Layer
 
@@ -62,7 +62,7 @@ public class RestaurantController {
 		
 		URI location = new URI("/restaurants/" + restaurant.getId());
 		
-		restaurantService.addRestaurant(restaurant );
+		restaurantService.addRestaurant(restaurant);
 		return ResponseEntity.created(location).body("{}");
 	}
 	

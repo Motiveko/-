@@ -29,5 +29,12 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 										.orElse(null); // Restaurant
 														// get() : 객체반환, orElse(a) : empty일 경우 a반환
 		return restaurant;
+	}
+
+	@Override
+	public Restaurant save(Restaurant restaurant) {
+		restaurant.setId(1234L);
+		restaurants.add(restaurant);
+		return restaurant;
 	}	
 }

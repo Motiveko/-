@@ -3,6 +3,7 @@ package kr.co.motiveko.eatgo.application;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.ArgumentMatchers.any;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,8 @@ public class restaurantServiceTest {
 		restaurantService = new RestaurantService(restaurantRepository,menuItemReposiory);
 	}
 
+	// given: 레포지토리는 ~를 넣으면 ~를 반환할것이다 라고 선언해주는거, @Mock은 가짜객체기때문에
+	// 실제로 동작하지 않기때문에 우리가 이렇게 만들어줘야한다.
 	// Repositry의 구현부는 상관없다. Service에 대해서만 테스트하므로 이런 가짜를 만든다. 기대값을 만들고 테스트한다.
 	private void mockRestaurantRepository() {
 		List<Restaurant> restaurants = new ArrayList<>();
@@ -55,6 +58,7 @@ public class restaurantServiceTest {
 		given(restaurantRepository.findAll()).willReturn(restaurants);
 		// getRestaurant()
 		given(restaurantRepository.findById(1004L)).willReturn(restaurant);
+		
 	}
 
 	private void mockMenuItemRepository() {
@@ -62,9 +66,6 @@ public class restaurantServiceTest {
 		menuItems.add(new MenuItem("Kimchi"));
 		given(menuItemReposiory.findAllByRestaurantId(1004L)).willReturn(menuItems);
 	}
-	
-	
-	
 	
 	@Test
 	public void getRestaurants() {		
@@ -83,5 +84,17 @@ public class restaurantServiceTest {
 		assertThat(menuItem.getName(), is("Kimchi"));
 	}
 	
+	@Test
+	public void addRestaurant() {
+		
+		Restaurant restaurant = new Restaurant("BeRyong", "Busan");
+		Restaurant saved = new Restaurant(1234L, "BeRyong", "Busan");
+		
+		given(restaurantRepository.save(any())).willReturn(saved);
 
+		Restaurant created = restaurantService.addRestaurant(restaurant);
+		
+		assertThat(created.getId(), is(1234L));
+		
+	}
 }

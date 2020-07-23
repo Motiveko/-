@@ -8,4 +8,6 @@ public interface RestaurantRepository {
 
 	Restaurant findById(Long id);
 
+	Restaurant save(Restaurant restaurant);
+
 }

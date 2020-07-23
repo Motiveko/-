@@ -90,8 +90,8 @@ public class RestaurantControllerTest {
 	public void create() throws Exception {
 
 		mvc.perform(post("/restaurants")
-			.contentType(MediaType.APPLICATION_JSON)				  // json 타입이냐
-			.content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}")) //
+					.contentType(MediaType.APPLICATION_JSON)				  // json 타입이냐
+					.content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}")) //
 			.andExpect(status().isCreated())
 			.andExpect(header().string("location", "/restaurants/1234"))
 			.andExpect(content().string("{}"));
