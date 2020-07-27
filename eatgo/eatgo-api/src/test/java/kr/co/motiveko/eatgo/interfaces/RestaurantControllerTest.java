@@ -3,6 +3,7 @@ package kr.co.motiveko.eatgo.interfaces;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -10,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
@@ -50,7 +52,11 @@ public class RestaurantControllerTest {
 		// Service객체가 잘 동작하는지의 여부가 관심사가 아니기 때문이다.
 		// 실제 서버가 돌아가며 서비스하고 있는 중에 테스트를 해야 한다고 할 때 이렇게 가짜로 만들어서 테스트 해야민 한다.
 		List<Restaurant> restaurants = new ArrayList<>();
-		restaurants.add(new Restaurant(1004L, "Bob zip", "Seoul"));
+		restaurants.add(Restaurant.builder()
+				.id(1004L)
+				.name("Bob zip")
+				.address("Seoul")
+				.build());
 		
 		// given() : static method from org.mockito.BDDMockito
 		given(restaurantService.getRestaurants()).willReturn(restaurants);
@@ -66,11 +72,21 @@ public class RestaurantControllerTest {
 	@Test
 	public void detail() throws Exception {
 		
-		Restaurant restaurant1 = new Restaurant(1004L, "Bob zip", "Seoul");
-		restaurant1.addMenuItem(new MenuItem("Kimchi"));
+		Restaurant restaurant1 = Restaurant.builder()
+				.id(1004L)
+				.name("Bob zip")
+				.address("Seoul")
+				.build();
+		restaurant1.setMenuItems( Arrays.asList(MenuItem.builder()
+												.name("Kimchi")
+												.build()));
 		given(restaurantService.getRestaurant(1004L)).willReturn(restaurant1);
 
-		Restaurant restaurant2 = new Restaurant(2020L, "Cyber Food", "Seoul");
+		Restaurant restaurant2 =Restaurant.builder()
+				.id(2020L)
+				.name("Cyber Food")
+				.address("Seoul")
+				.build();
 		given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
 		
 		mvc.perform(get("/restaurants/1004"))
@@ -85,9 +101,18 @@ public class RestaurantControllerTest {
 			.andExpect(content().string(containsString("\"name\":\"Cyber Food\"")));
 	}
 	
-	
 	@Test
 	public void create() throws Exception {
+		
+		// .will과 invocation... 강의에서 뭔가 누락된부분인데 잘 모르겠다!
+		given(restaurantService.addRestaurant(any())).will(invocation ->{
+			Restaurant restaurant = invocation.getArgument(0);
+			return Restaurant.builder()
+					.id(1234L)
+					.name(restaurant.getName())
+					.address(restaurant.getAddress())
+					.build();
+		});
 
 		mvc.perform(post("/restaurants")
 					.contentType(MediaType.APPLICATION_JSON)				  // json 타입이냐
@@ -100,4 +125,13 @@ public class RestaurantControllerTest {
 		verify(restaurantService).addRestaurant(any());
 	}
 	
+	@Test
+	public void update() throws Exception {
+		mvc.perform(patch("/restaurants/1004")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content("{\"name\":\"JOKER Bar\",\"address\":\"Busan\"}"))
+			.andExpect(status().isOk());
+		
+		verify(restaurantService).updateRestaurant(1004L,"JOKER Bar","Busan");
+	}
 }

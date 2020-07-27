@@ -4,7 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 @Entity // Identifier로 구분되는 객체다. 관리(managed) 되는 객체
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class MenuItem {
 
 	@Id //Identifier로 사용하겠다.
@@ -13,13 +22,6 @@ public class MenuItem {
 	
 	private Long restaurantId;
 	
-	private final String name;
-	
-	public MenuItem(String name) {
-		this.name = name;
-	}
+	private String name;
 
-	public String getName() {
-		return name;
-	}
 }
