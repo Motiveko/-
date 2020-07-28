@@ -132,7 +132,7 @@ public class RestaurantControllerTest {
 			.andExpect(header().string("location", "/restaurants/1234"))
 			.andExpect(content().string("{}"));
 
-		//요것이 한번 실행되는지 검사, any()는 아무거나 들어와도 된다의 표시
+		//요것이 한번 실행되는지 검사, any()는 아무거나 들어와도 된다의 표시!
 		verify(restaurantService).addRestaurant(any());
 	}
 	
