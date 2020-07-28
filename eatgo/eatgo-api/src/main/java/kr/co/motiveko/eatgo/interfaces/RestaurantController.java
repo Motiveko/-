@@ -4,6 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -55,7 +57,7 @@ public class RestaurantController {
 	// Client - 받은 정보를 JsonParser가 돌아가게 만든다. 없으면 Empty{} 를 돌려준다.
 	// HTTPie(Postman 비슷한거)
 	@PostMapping("/restaurants")
-	public ResponseEntity<?> create(@RequestBody Restaurant resource) throws URISyntaxException {
+	public ResponseEntity<?> create(@Valid @RequestBody Restaurant resource) throws URISyntaxException {
 		
 		// https://blog.naver.com/rapa100g/222030752263 URI <-> URL
 		Restaurant restaurant = restaurantService.addRestaurant(
@@ -70,7 +72,7 @@ public class RestaurantController {
 	
 	@PatchMapping("/restaurants/{id}")
 	public String update(@PathVariable("id") Long id,
-						@RequestBody Restaurant resource) {
+						@Valid @RequestBody Restaurant resource) {
 		String name = resource.getName();
 		String address = resource.getAddress();		
 

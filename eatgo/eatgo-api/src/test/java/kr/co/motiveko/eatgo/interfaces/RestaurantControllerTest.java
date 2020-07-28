@@ -102,7 +102,7 @@ public class RestaurantControllerTest {
 	}
 	
 	@Test
-	public void create() throws Exception {
+	public void createWithValidData() throws Exception {
 		
 		// .will과 invocation... 강의에서 뭔가 누락된부분인데 잘 모르겠다!
 		given(restaurantService.addRestaurant(any())).will(invocation ->{
@@ -126,12 +126,33 @@ public class RestaurantControllerTest {
 	}
 	
 	@Test
-	public void update() throws Exception {
+	public void createWithInvalidData() throws Exception {
+		// validation 검사에서 탈락했을때
+		
+		mvc.perform(post("/restaurants")
+					.contentType(MediaType.APPLICATION_JSON)		
+					.content("{\"name\":\"\",\"address\":\"\"}")) // Empty인자가 들어왔을때 Status : 400
+			.andExpect(status().isBadRequest());
+
+	}
+	
+	
+	@Test
+	public void updateWithValidData() throws Exception {
 		mvc.perform(patch("/restaurants/1004")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content("{\"name\":\"JOKER Bar\",\"address\":\"Busan\"}"))
 			.andExpect(status().isOk());
 		
 		verify(restaurantService).updateRestaurant(1004L,"JOKER Bar","Busan");
+	}
+	
+	@Test
+	public void updateWithoutName() throws Exception {
+		mvc.perform(patch("/restaurants/1004")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content("{\"name\":\"\",\"address\":\"Busan\"}"))
+			.andExpect(status().isBadRequest());
+		
 	}
 }
