@@ -45,6 +45,7 @@ public class RestaurantController {
 	@GetMapping("/restaurants/{id}")
 	public Restaurant detail( @PathVariable("id") Long id) {
 		
+		
 		Restaurant restaurant = restaurantService.getRestaurant(id);	
 //		List<MenuItem> menuItems = menuItemReposiory.findAllByRestaurantId(id);
 //		restaurant.setMenuItems(menuItems);
