@@ -58,7 +58,8 @@ public class RestaurantController {
 	// Client - 받은 정보를 JsonParser가 돌아가게 만든다. 없으면 Empty{} 를 돌려준다.
 	// HTTPie(Postman 비슷한거)
 	@PostMapping("/restaurants")
-	public ResponseEntity<?> create(@Valid @RequestBody Restaurant resource) throws URISyntaxException {
+	public ResponseEntity<?> create(@Valid @RequestBody Restaurant resource) 
+			throws URISyntaxException {
 		
 		// https://blog.naver.com/rapa100g/222030752263 URI <-> URL
 		Restaurant restaurant = restaurantService.addRestaurant(
