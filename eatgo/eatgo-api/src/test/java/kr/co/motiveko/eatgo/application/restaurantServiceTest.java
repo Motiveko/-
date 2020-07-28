@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import kr.co.motiveko.eatgo.domain.MenuItem;
 import kr.co.motiveko.eatgo.domain.MenuItemRepository;
 import kr.co.motiveko.eatgo.domain.Restaurant;
-import kr.co.motiveko.eatgo.domain.RestaurantNotFoundException;
 import kr.co.motiveko.eatgo.domain.RestaurantRepository;
 
 public class restaurantServiceTest {
@@ -85,7 +84,7 @@ public class restaurantServiceTest {
 	}
 	
 	@Test
-	public void getRestaurantWithExisted() {
+	public void getRestaurant() {
 		
 		Restaurant restaurant = restaurantService.getRestaurant(1004L);
 		assertThat(restaurant.getId(), is(1004L));
@@ -94,14 +93,9 @@ public class restaurantServiceTest {
 		assertThat(menuItem.getName(), is("Kimchi"));
 	}
 	
-	@Test(expected = RestaurantNotFoundException.class) 
-	public void getRestaurantWithNotExisted() {
-		// 404R
-		Restaurant restaurant = restaurantService.getRestaurant(404L);
-	}	
-	
 	@Test
-	public void addRestaurant() {		
+	public void addRestaurant() {
+		
 		// invocation 은 method를 의미하는듯? getArgument하면 method의 파라미터 들고오는거같다.
 		given(restaurantRepository.save(any())).will(invocation -> {
 			Restaurant restaurant = invocation.getArgument(0);
@@ -112,9 +106,11 @@ public class restaurantServiceTest {
 		Restaurant restaurant = Restaurant.builder()
 				.name("BeRyong")
 				.address("Busan")
-				.build();						
+				.build();
+						
 
 		Restaurant created = restaurantService.addRestaurant(restaurant);
+		
 		assertThat(created.getId(), is(1234L));		
 	}
 	

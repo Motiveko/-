@@ -30,7 +30,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import kr.co.motiveko.eatgo.application.RestaurantService;
 import kr.co.motiveko.eatgo.domain.MenuItem;
 import kr.co.motiveko.eatgo.domain.Restaurant;
-import kr.co.motiveko.eatgo.domain.RestaurantNotFoundException;
 
 
 @RunWith(SpringRunner.class) // spring runner를 이용해서 테스트한다.
@@ -71,7 +70,7 @@ public class RestaurantControllerTest {
 	}
 	
 	@Test
-	public void detailWithExisted() throws Exception {
+	public void detail() throws Exception {
 		
 		Restaurant restaurant1 = Restaurant.builder()
 				.id(1004L)
@@ -101,16 +100,6 @@ public class RestaurantControllerTest {
 			.andExpect(content().string(containsString("\"id\":2020")))
 			.andExpect(content().string(containsString("\"name\":\"Cyber Food\"")));
 	}
-	
-	@Test
-	public void detailWithNotExisted() throws Exception {
-		// 404 Not Found
-		given(restaurantService.getRestaurant(404L))
-			.willThrow(new RestaurantNotFoundException(404L)); //exception을 직접 만들었다
-		mvc.perform(get("/restaurants/404"))
-			.andExpect(status().isNotFound())
-			.andExpect(content().string("{}"));
-	}	
 	
 	@Test
 	public void createWithValidData() throws Exception {

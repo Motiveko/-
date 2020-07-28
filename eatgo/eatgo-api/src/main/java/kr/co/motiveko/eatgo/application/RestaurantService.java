@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import kr.co.motiveko.eatgo.domain.MenuItem;
 import kr.co.motiveko.eatgo.domain.MenuItemRepository;
 import kr.co.motiveko.eatgo.domain.Restaurant;
-import kr.co.motiveko.eatgo.domain.RestaurantNotFoundException;
 import kr.co.motiveko.eatgo.domain.RestaurantRepository;
 
 @Service
@@ -29,13 +28,8 @@ public class RestaurantService {
 	}
 
 	public Restaurant getRestaurant(Long id) {
-		
-		Restaurant restaurant = restaurantRepository.findById(id).
-													orElseThrow(() -> new RestaurantNotFoundException(id));
-																// Supplier<T> 는 위와 같이 람다식으로 표현하면 같은 의미이다..
-																// orElseThrow에 들어올때만 이것을 실행하겠다는 의미라는데.. 잘모르겠다.
+		Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
 		List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
-		
 		restaurant.setMenuItems(menuItems);		
 		
 		return restaurant;
