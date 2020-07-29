@@ -7,8 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 // spring data jpa는 extends만 하고 구현은 안해도 jpa를 쓸 수 있다..
 // 내가 method를 구현하지 않아도 알아서 id값과 비교해야할거 비교해서 다 가져와준다?
 public interface MenuItemRepository extends CrudRepository<MenuItem, Long>{
-	List<MenuItem> findAllByRestaurantId(Long restaurantId);
-	
 	// Persistence : 영속화, 서버가 꺼져도 데이터가 남아있게한다.
 	// Hibernate : JPA의 구현체
 	// @Entity : Identifier로 구분되는  객체
@@ -23,5 +21,10 @@ public interface MenuItemRepository extends CrudRepository<MenuItem, Long>{
 	 * 
 	 * 코드가 매우 깔끔하게 만들어진다.
 	 */
+	
+	List<MenuItem> findAllByRestaurantId(Long restaurantId);
+	
+	void deleteById(Long id);
+	
 	
 }

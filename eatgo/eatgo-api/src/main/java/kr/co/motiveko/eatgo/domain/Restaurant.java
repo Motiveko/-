@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,6 +37,9 @@ public class Restaurant{
 	
 	// @Entity에서 임시적으로 쓰는 필드에 표시. Json으로 돌려주기 위해 임시로 쓰는것이었다. MappingException 발생시 해결
 	@Transient
+	// Jackson의 @JsonInclude :: 이게 붙은 Entity를 Json화 시킬 때 menuItems는 NonNull일 때에만 포함시키겠다.
+	// restaurant list 출력 시 menuItems는 안긁어오기때문에 항상 null로 표시되는데 이를 지워버린다!
+	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	private List<MenuItem> menuItems;
 	
 		

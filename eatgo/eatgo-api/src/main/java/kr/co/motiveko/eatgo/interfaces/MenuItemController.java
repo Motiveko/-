@@ -1,6 +1,5 @@
 package kr.co.motiveko.eatgo.interfaces;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
