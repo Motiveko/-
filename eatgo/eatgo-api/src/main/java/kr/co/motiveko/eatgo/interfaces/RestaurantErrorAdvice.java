@@ -19,6 +19,5 @@ public class RestaurantErrorAdvice {
 	@ResponseBody
 	public String handleNotFound() {
 		return "{}";
-				
 	}
 }
