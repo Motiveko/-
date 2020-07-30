@@ -41,6 +41,10 @@ public class Restaurant{
 	// restaurant list 출력 시 menuItems는 안긁어오기때문에 항상 null로 표시되는데 이를 지워버린다!
 	@JsonInclude(JsonInclude.Include.NON_NULL) 
 	private List<MenuItem> menuItems;
+
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private List<Review> reviews;
 	
 		
 	public String getInformation() {
@@ -50,13 +54,18 @@ public class Restaurant{
 	public void addMenuItem(MenuItem menuItem) {
 		menuItems.add(menuItem);
 	}	
+	public void updateInformation(String name, String address) {
+		this.name = name;
+		this.address = address;
+	}
 	public void setMenuItems(List<MenuItem> menuItems) {
 //		this.menuItems = menuItems; // 이렇게하면 참조만 하게 된다. 아래와 같이 새로 생성해줘야한다.
 		this.menuItems = new ArrayList<>(menuItems);
 	}
-	public void updateInformation(String name, String address) {
-		this.name = name;
-		this.address = address;
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = new ArrayList<>(reviews);
+		
 	}
 
 }

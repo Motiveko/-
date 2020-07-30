@@ -31,6 +31,7 @@ import kr.co.motiveko.eatgo.application.RestaurantService;
 import kr.co.motiveko.eatgo.domain.MenuItem;
 import kr.co.motiveko.eatgo.domain.Restaurant;
 import kr.co.motiveko.eatgo.domain.RestaurantNotFoundException;
+import kr.co.motiveko.eatgo.domain.Review;
 
 
 @RunWith(SpringRunner.class) // spring runner를 이용해서 테스트한다.
@@ -73,33 +74,32 @@ public class RestaurantControllerTest {
 	@Test
 	public void detailWithExisted() throws Exception {
 		
-		Restaurant restaurant1 = Restaurant.builder()
+		Restaurant restaurant = Restaurant.builder()
 				.id(1004L)
-				.name("Bob zip")
+				.name("JOKER House")
 				.address("Seoul")
 				.build();
-		restaurant1.setMenuItems( Arrays.asList(MenuItem.builder()
+		
+		restaurant.setMenuItems( Arrays.asList(MenuItem.builder()
 												.name("Kimchi")
 												.build()));
-		given(restaurantService.getRestaurant(1004L)).willReturn(restaurant1);
+		Review review = Review.builder()
+					.name("JOKER House")
+					.score(5)
+					.description("good")
+					.build();
+		restaurant.setReviews(Arrays.asList(review));
+		
+		given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
-		Restaurant restaurant2 =Restaurant.builder()
-				.id(2020L)
-				.name("Cyber Food")
-				.address("Seoul")
-				.build();
-		given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
 		
 		mvc.perform(get("/restaurants/1004"))
 			.andExpect(status().isOk())
-			.andExpect(content().string(containsString("\"name\":\"Bob zip\"")))
+			.andExpect(content().string(containsString("\"name\":\"JOKER House\"")))
 			.andExpect(content().string(containsString("\"id\":1004")))
-			.andExpect(content().string(containsString("Kimchi")));
+			.andExpect(content().string(containsString("Kimchi")))
+			.andExpect(content().string(containsString("good")));
 		
-		mvc.perform(get("/restaurants/2020"))
-			.andExpect(status().isOk())
-			.andExpect(content().string(containsString("\"id\":2020")))
-			.andExpect(content().string(containsString("\"name\":\"Cyber Food\"")));
 	}
 	
 	@Test
