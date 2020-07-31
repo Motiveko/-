@@ -50,13 +50,9 @@ dependencies {
 }
 
 jar {
-    enabled = true
+    enabled = true 
 }
 
 bootJar {
     enabled = false
-}
-
-test {
-    useJUnitPlatform()
 }
