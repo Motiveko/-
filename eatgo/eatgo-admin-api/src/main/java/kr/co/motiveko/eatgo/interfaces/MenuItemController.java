@@ -3,6 +3,7 @@ package kr.co.motiveko.eatgo.interfaces;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,5 +26,10 @@ public class MenuItemController {
 		
 		menuItemrService.bulkUpdate(restaurantId,menuItems);
 		return "";
+	}
+	
+	@GetMapping("/restaurants/{restaurantId}/menuitems")
+	public List<MenuItem> list(@PathVariable("restaurantId") Long restaurantId){
+		return menuItemrService.getMenuItems(restaurantId);
 	}
 }

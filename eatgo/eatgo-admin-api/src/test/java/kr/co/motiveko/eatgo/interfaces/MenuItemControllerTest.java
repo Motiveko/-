@@ -1,9 +1,11 @@
 package kr.co.motiveko.eatgo.interfaces;
 
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
@@ -41,4 +43,5 @@ public class MenuItemControllerTest {
 		verify(menuItemService).bulkUpdate(eq(1L), any());
 	}
 	
+
 }

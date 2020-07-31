@@ -34,8 +34,4 @@ public class MenuItem {
 	// default : false이므로 false일 때 포함안시킴
 	@JsonInclude(JsonInclude.Include.NON_DEFAULT) 
 	private boolean destroy;
-	
-
-
-
 }
