@@ -8,10 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@SpringBootApplication(scanBasePackages={"com.example.something", "com.example.application"}) 와 같이 해주면 된다. 
 //이 때 자기 디렉토리까지 다시 써줘야함
 @SpringBootApplication
-public class EatgoApplication {
+public class EatgoAdminApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EatgoApplication.class, args);
+		SpringApplication.run(EatgoAdminApiApplication.class, args);
 	}
 
 }

@@ -9,7 +9,7 @@ apply plugin: 'eclipse'
 eclipse {
 	project {
 		name = 'eatgo-admin-api'
-}
+	}
 }
 
 
