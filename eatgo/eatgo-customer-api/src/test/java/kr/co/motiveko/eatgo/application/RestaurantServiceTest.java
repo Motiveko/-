@@ -130,38 +130,4 @@ public class RestaurantServiceTest {
 		Restaurant restaurant = restaurantService.getRestaurant(404L);
 	}	
 	
-	@Test
-	public void addRestaurant() {		
-		// invocation 은 method를 의미하는듯? getArgument하면 method의 파라미터 들고오는거같다.
-		given(restaurantRepository.save(any())).will(invocation -> {
-			Restaurant restaurant = invocation.getArgument(0);
-			restaurant.setId(1234L);
-			return restaurant;
-		});
-		
-		Restaurant restaurant = Restaurant.builder()
-				.name("BeRyong")
-				.address("Busan")
-				.build();						
-
-		Restaurant created = restaurantService.addRestaurant(restaurant);
-		assertThat(created.getId(), is(1234L));		
-	}
-	
-	@Test
-	public void updateRestaurant() {
-		// updateRestaurant()내에서 restaurantRepository.findById로 나오는 객체는 restaurant이고 우리는 이것을 바꾼다.
-		Restaurant restaurant = Restaurant.builder()
-				.name("Bob Zip")
-				.address("Sool zip")
-				.build();
-		given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant)); // findById는 Optional<T>를 반환한다.
-		
-		// repository에서 찾은 restaurant이 method를 통해 입력한 값으로 바뀐다.
-		restaurantService.updateRestaurant(1004L, "Sool zip", "Busan");
-		
-		// 따라서 검사는 restaurant에 대해서 하면 된다.
-		assertThat(restaurant.getName(),is("Sool zip"));
-		assertThat(restaurant.getAddress(),is("Busan"));
-	}
 }

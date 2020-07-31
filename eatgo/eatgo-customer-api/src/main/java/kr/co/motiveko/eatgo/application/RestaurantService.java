@@ -57,18 +57,4 @@ public class RestaurantService {
 		return restaurants;
 	}
 
-	public Restaurant addRestaurant(Restaurant restaurant) {		
-		return restaurantRepository.save(restaurant);
-	}
-
-	// @Transactional : 이 메소드를 하나의 트랜잭션으로 적용한다. 이 적용 범위를 벗어날 때 commit이 된다
-	// 따로 명시적으로 restaurantRepository.save()를 할 필요가 없어진다
-	@Transactional
-	public Restaurant updateRestaurant(Long id, String name, String address) {
-		Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
-		
-		// setName, setAddress를 updateInfo로 통합하여 불필요한 메소드를 줄였다.
-		restaurant.updateInformation(name,address);
-		return restaurant;
-	}
 }

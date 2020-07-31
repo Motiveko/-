@@ -112,58 +112,6 @@ public class RestaurantControllerTest {
 			.andExpect(content().string("{}"));
 	}	
 	
-	@Test
-	public void createWithValidData() throws Exception {
-		
-		// .will과 invocation... 강의에서 뭔가 누락된부분인데 잘 모르겠다!
-		given(restaurantService.addRestaurant(any())).will(invocation ->{
-			Restaurant restaurant = invocation.getArgument(0);
-			return Restaurant.builder()
-					.id(1234L)
-					.name(restaurant.getName())
-					.address(restaurant.getAddress())
-					.build();
-		});
+	
 
-		mvc.perform(post("/restaurants")
-					.contentType(MediaType.APPLICATION_JSON)				  // json 타입이냐
-					.content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}")) //
-			.andExpect(status().isCreated())
-			.andExpect(header().string("location", "/restaurants/1234"))
-			.andExpect(content().string("{}"));
-
-		//요것이 한번 실행되는지 검사, any()는 아무거나 들어와도 된다의 표시!
-		verify(restaurantService).addRestaurant(any());
-	}
-	
-	@Test
-	public void createWithInvalidData() throws Exception {
-		// validation 검사에서 탈락했을때
-		
-		mvc.perform(post("/restaurants")
-					.contentType(MediaType.APPLICATION_JSON)		
-					.content("{\"name\":\"\",\"address\":\"\"}")) // Empty인자가 들어왔을때 Status : 400
-			.andExpect(status().isBadRequest());
-
-	}
-	
-	
-	@Test
-	public void updateWithValidData() throws Exception {
-		mvc.perform(patch("/restaurants/1004")
-					.contentType(MediaType.APPLICATION_JSON)
-					.content("{\"name\":\"JOKER Bar\",\"address\":\"Busan\"}"))
-			.andExpect(status().isOk());
-		
-		verify(restaurantService).updateRestaurant(1004L,"JOKER Bar","Busan");
-	}
-	
-	@Test
-	public void updateWithoutName() throws Exception {
-		mvc.perform(patch("/restaurants/1004")
-					.contentType(MediaType.APPLICATION_JSON)
-					.content("{\"name\":\"\",\"address\":\"Busan\"}"))
-			.andExpect(status().isBadRequest());
-		
-	}
 }
