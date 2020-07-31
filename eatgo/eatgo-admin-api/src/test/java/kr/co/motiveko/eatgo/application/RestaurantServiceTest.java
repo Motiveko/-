@@ -29,12 +29,7 @@ public class RestaurantServiceTest {
 	
 	@Mock
 	private RestaurantRepository restaurantRepository;
-	
-	@Mock
-	private MenuItemRepository menuItemRepository;
 
-	@Mock
-	private ReviewRepository reviewRepository;
 	
 	
 	// 이 테스트에 restauranservice 에 new로 인스턴스생성하면 스프링이 bean 만든 이후에 객채를 만드므로
@@ -49,14 +44,9 @@ public class RestaurantServiceTest {
 		
 		// @Mock, @SpyBean 등의 가짜객체 어노테이션 붙어있는것을을 initialize( instance생성?) 해준다.
 		MockitoAnnotations.initMocks(this);
-		mockMenuItemRepository();
 		mockRestaurantRepository();
-		mockReviewRepository();
-		
-	
-		restaurantService = new RestaurantService(restaurantRepository,
-													menuItemRepository,
-													reviewRepository);
+			
+		restaurantService = new RestaurantService(restaurantRepository);
 	}
 
 	// given: 레포지토리는 ~를 넣으면 ~를 반환할것이다 라고 선언해주는거, @Mock은 가짜객체기때문에
@@ -79,25 +69,7 @@ public class RestaurantServiceTest {
 		
 	}
 
-	private void mockMenuItemRepository() {
-		List<MenuItem> menuItems = new ArrayList<>();
-		menuItems.add(MenuItem.builder()
-				.name("Kimchi")
-				.build());
-		given(menuItemRepository.findAllByRestaurantId(1004L)).willReturn(menuItems);
-	}
-	
-	private void mockReviewRepository() {
-		List<Review> reviews = new ArrayList<>();
 
-		reviews.add(Review.builder()
-							.name("BeRyong")
-							.score(5)
-							.description("good")
-							.build());
-		given(reviewRepository.findAllByRestaurantId(1004L))
-							.willReturn(reviews);
-	}
 	
 	@Test
 	public void getRestaurants() {		
@@ -113,15 +85,7 @@ public class RestaurantServiceTest {
 		Restaurant restaurant = restaurantService.getRestaurant(1004L);
 		assertThat(restaurant.getId(), is(1004L));
 		
-		verify(menuItemRepository).findAllByRestaurantId(eq(1004L));
-		verify(reviewRepository).findAllByRestaurantId(eq(1004L));
-		
-		MenuItem menuItem = restaurant.getMenuItems().get(0);
-		assertThat(menuItem.getName(), is("Kimchi"));
-		
-		Review review = restaurant.getReviews().get(0);
-		assertThat(review.getDescription(),is("good"));
-		
+		//메뉴아이템, 리뷰 관련 내용들 제외!
 	}
 	
 	@Test(expected = RestaurantNotFoundException.class) 

@@ -1,11 +1,19 @@
 package kr.co.motiveko.eatgo.interfaces;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.BDDMockito.*;
 
 import org.junit.Test;
@@ -34,29 +42,17 @@ public class ReviewControllerTest {
 	private ReviewService reviewService;
 
 	@Test
-	public void createWithValidAttributes() throws Exception {
-				
-		given(reviewService.addReview(eq(1L),any())).willReturn(
-				Review.builder()
-				.id(1004L)
-				.build()				
-		);
+	public void list() throws Exception {
 		
-		mvc.perform(post("/restaurants/1/reviews")
-					.contentType(MediaType.APPLICATION_JSON)
-					.content("{\"name\":\"motiveko\",\"score\":3,\"description\":\"good\"}"))
-			.andExpect(status().isCreated())
-			.andExpect(header().string("location","/restaurants/1/reviews/1004"));
-	
-		verify(reviewService).addReview(eq(1L),any());
+		List<Review> reviews = new ArrayList<>();
+		
+		reviews.add(Review.builder().description("Cool!").build());
+		given(reviewService.getReviews()).willReturn(reviews);
+		
+		
+		// 관리자는 그냥 전체 리뷰에 대한 테스트만 할 것이므로 /restaurants/{id}/..가 아닌 /reviews로 간다.
+		mvc.perform(get("/reviews"))
+			.andExpect(status().isOk())
+			.andExpect(content().string(containsString("Cool!")));
 	}
-	
-	@Test
-	public void createWithInvalidAttributes() throws Exception {
-		mvc.perform(post("/restaurants/1/reviews")
-					.contentType(MediaType.APPLICATION_JSON)
-					.content("{\"name\":\"\",\"score\":3,\"description\":\"\"}"))
-			.andExpect(status().isBadRequest());
-		verify(reviewService,never()).addReview(eq(1L),any());
-	}	
 }

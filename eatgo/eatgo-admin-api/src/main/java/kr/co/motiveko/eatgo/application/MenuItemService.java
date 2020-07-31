@@ -1,5 +1,6 @@
 package kr.co.motiveko.eatgo.application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,13 @@ public class MenuItemService {
 		} 
 		menuItem.setRestaurantId(restaurantId);
 		menuItemRepository.save(menuItem);
+	}
+
+
+	public List<MenuItem> getMenuItems(Long restaurantId) {
+
+		List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(restaurantId);		
+		return menuItems;
 	}
 
 }

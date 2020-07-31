@@ -1,5 +1,7 @@
 package kr.co.motiveko.eatgo.application;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import kr.co.motiveko.eatgo.domain.Review;
@@ -17,6 +19,10 @@ public class ReviewService {
 	public Review addReview(Long restaurantId,Review review) {
 		review.setRestaurantId(restaurantId);
 		return reviewRepository.save(review);
+	}
+
+	public List<Review> getReviews() {
+		return reviewRepository.findAll();
 	}
 
 }

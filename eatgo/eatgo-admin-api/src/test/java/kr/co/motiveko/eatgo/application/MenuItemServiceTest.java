@@ -1,9 +1,14 @@
 package kr.co.motiveko.eatgo.application;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.given;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,18 @@ public class MenuItemServiceTest {
 		menuItemService = new MenuItemService(menuItemRepository);
 	}
 
+	@Test
+	public void getMenuItems() {
+		
+		List<MenuItem> mockMenuItems = new ArrayList<>();
+		mockMenuItems.add(MenuItem.builder().name("Kimchi").build());
+		given(menuItemRepository.findAllByRestaurantId(1004L)).willReturn(mockMenuItems);
+		
+		List<MenuItem> menuItems = menuItemService.getMenuItems(1004L);
+		MenuItem menuItem = menuItems.get(0);		
+		assertThat(menuItem.getName(),is("Kimchi"));
+	}
+	
 	@Test
 	public void bulkUpdate() {
 		List<MenuItem> menuItems = new ArrayList<>();

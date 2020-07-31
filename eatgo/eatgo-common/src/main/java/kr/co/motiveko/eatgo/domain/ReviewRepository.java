@@ -11,5 +11,7 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 	@SuppressWarnings("unchecked")
 	Review save(Review review);
 
+	List<Review> findAll();
+	
 	List<Review> findAllByRestaurantId(long eq);
 }
