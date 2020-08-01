@@ -56,18 +56,16 @@ public class RestaurantControllerTest {
 		List<Restaurant> restaurants = new ArrayList<>();
 		restaurants.add(Restaurant.builder()
 				.id(1004L)
-				.name("Bob zip")
+				.name("JOKER House")
 				.address("Seoul")
 				.build());
 		
 		// given() : static method from org.mockito.BDDMockito
-		given(restaurantService.getRestaurants()).willReturn(restaurants);
+		given(restaurantService.getRestaurants("Seoul")).willReturn(restaurants);
 		
-		restaurantService.getRestaurants();
-		
-		mvc.perform(get("/restaurants"))
+		mvc.perform(get("/restaurants?region=Seoul"))
 			.andExpect(status().isOk())
-			.andExpect(content().string(containsString("\"name\":\"Bob zip\"")))
+			.andExpect(content().string(containsString("\"name\":\"JOKER House\"")))
 			.andExpect(content().string(containsString("\"id\":1004")));
 	}
 	
@@ -91,15 +89,12 @@ public class RestaurantControllerTest {
 		restaurant.setReviews(Arrays.asList(review));
 		
 		given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
-
-		
 		mvc.perform(get("/restaurants/1004"))
 			.andExpect(status().isOk())
 			.andExpect(content().string(containsString("\"name\":\"JOKER House\"")))
 			.andExpect(content().string(containsString("\"id\":1004")))
 			.andExpect(content().string(containsString("Kimchi")))
 			.andExpect(content().string(containsString("good")));
-		
 	}
 	
 	@Test

@@ -1,6 +1,5 @@
 package kr.co.motiveko.eatgo.application;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import kr.co.motiveko.eatgo.domain.Region;
 import kr.co.motiveko.eatgo.domain.RegionRepository;
 
 @Service
-public class RegionService {
+public class RegionService {	
 
 	@Autowired
 	private RegionRepository regionRepository;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.motiveko.eatgo.application.RestaurantService;
@@ -26,13 +27,14 @@ public class RestaurantController {
 	// Controller : UI (Interface, Presentational) Layer
 	// Service : Application(Business) Layer?
 	// Repository : Domain (Persistence) Layer
-
 	@Autowired
 	RestaurantService restaurantService;
 	
+	// @RequestParam("region") -> ?region=~ 를 받을 수 있다.
 	@GetMapping("/restaurants")
-	public List<Restaurant> list() {
-		List<Restaurant> restaurants = restaurantService.getRestaurants();
+	public List<Restaurant> list(
+			@RequestParam("region") String region) {
+		List<Restaurant> restaurants = restaurantService.getRestaurants(region);
 		return restaurants;
 	}
 	
@@ -40,12 +42,7 @@ public class RestaurantController {
 	// 그리고 해당 값은 @PathVariable(id)로 받아줄 수 있다.
 	@GetMapping("/restaurants/{id}")
 	public Restaurant detail( @PathVariable("id") Long id) {
-		
-		
-		Restaurant restaurant = restaurantService.getRestaurant(id);	
-//		List<MenuItem> menuItems = menuItemReposiory.findAllByRestaurantId(id);
-//		restaurant.setMenuItems(menuItems);
-		
+		Restaurant restaurant = restaurantService.getRestaurant(id);		
 		return restaurant;
 	}
 	
