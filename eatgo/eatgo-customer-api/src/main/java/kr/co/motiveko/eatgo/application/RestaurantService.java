@@ -52,10 +52,9 @@ public class RestaurantService {
 		return restaurant;
 	}
 
-	public List<Restaurant> getRestaurants(String region) {
-		// TODO: region으로 필터링
+	public List<Restaurant> getRestaurants(String region, long categoryId) {
 		List<Restaurant> restaurants = 
-				restaurantRepository.findAllByAddressContaining(region);
+				restaurantRepository.findAllByAddressContainingAndCategoryId(region,categoryId);
 		return restaurants;
 	}
 

@@ -40,8 +40,7 @@ public class RestaurantController {
 	// 그리고 해당 값은 @PathVariable(id)로 받아줄 수 있다.
 	@GetMapping("/restaurants/{id}")
 	public Restaurant detail( @PathVariable("id") Long id) {
-		
-		
+				
 		Restaurant restaurant = restaurantService.getRestaurant(id);	
 //		List<MenuItem> menuItems = menuItemReposiory.findAllByRestaurantId(id);
 //		restaurant.setMenuItems(menuItems);
@@ -71,6 +70,7 @@ public class RestaurantController {
 	@PatchMapping("/restaurants/{id}")
 	public String update(@PathVariable("id") Long id,
 						@Valid @RequestBody Restaurant resource) {
+		System.out.println("뭐야이거!!!:: " + resource.getCategoryId());
 		String name = resource.getName();
 		String address = resource.getAddress();		
 

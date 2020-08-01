@@ -56,16 +56,18 @@ public class RestaurantControllerTest {
 		List<Restaurant> restaurants = new ArrayList<>();
 		restaurants.add(Restaurant.builder()
 				.id(1004L)
+				.categoryId(1L)
 				.name("JOKER House")
 				.address("Seoul")
 				.build());
 		
 		// given() : static method from org.mockito.BDDMockito
-		given(restaurantService.getRestaurants("Seoul")).willReturn(restaurants);
+		given(restaurantService.getRestaurants("Seoul",1L)).willReturn(restaurants);
 		
-		mvc.perform(get("/restaurants?region=Seoul"))
+		mvc.perform(get("/restaurants?region=Seoul&categoryId=1"))
 			.andExpect(status().isOk())
 			.andExpect(content().string(containsString("\"name\":\"JOKER House\"")))
+			.andExpect(content().string(containsString("\"categoryId\":1")))
 			.andExpect(content().string(containsString("\"id\":1004")));
 	}
 	

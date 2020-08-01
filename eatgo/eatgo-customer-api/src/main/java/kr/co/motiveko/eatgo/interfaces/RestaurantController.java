@@ -33,8 +33,9 @@ public class RestaurantController {
 	// @RequestParam("region") -> ?region=~ 를 받을 수 있다.
 	@GetMapping("/restaurants")
 	public List<Restaurant> list(
-			@RequestParam("region") String region) {
-		List<Restaurant> restaurants = restaurantService.getRestaurants(region);
+			@RequestParam("region") String region,
+			@RequestParam("categoryId") Long categoryId) {
+		List<Restaurant> restaurants = restaurantService.getRestaurants(region,categoryId);
 		return restaurants;
 	}
 	

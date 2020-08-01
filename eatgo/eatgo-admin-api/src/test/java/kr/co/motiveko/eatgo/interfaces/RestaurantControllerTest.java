@@ -33,7 +33,7 @@ import kr.co.motiveko.eatgo.domain.Restaurant;
 import kr.co.motiveko.eatgo.domain.RestaurantNotFoundException;
 import kr.co.motiveko.eatgo.domain.Review;
 
-
+// admin-api
 @RunWith(SpringRunner.class) // spring runner를 이용해서 테스트한다.
 @WebMvcTest(RestaurantController.class) // RestaurantController에 대해서 테스트한다.
 public class RestaurantControllerTest {
@@ -56,6 +56,7 @@ public class RestaurantControllerTest {
 		List<Restaurant> restaurants = new ArrayList<>();
 		restaurants.add(Restaurant.builder()
 				.id(1004L)
+				.categoryId(1L)
 				.name("Bob zip")
 				.address("Seoul")
 				.build());
@@ -67,7 +68,7 @@ public class RestaurantControllerTest {
 		
 		mvc.perform(get("/restaurants"))
 			.andExpect(status().isOk())
-			.andExpect(content().string(containsString("\"name\":\"Bob zip\"")))
+			.andExpect(content().string(containsString("\"categoryId\":1,\"name\":\"Bob zip\"")))
 			.andExpect(content().string(containsString("\"id\":1004")));
 	}
 	
@@ -76,6 +77,7 @@ public class RestaurantControllerTest {
 		
 		Restaurant restaurant = Restaurant.builder()
 				.id(1004L)
+				.categoryId(1L)
 				.name("JOKER House")
 				.address("Seoul")
 				.build();
@@ -108,6 +110,7 @@ public class RestaurantControllerTest {
 			Restaurant restaurant = invocation.getArgument(0);
 			return Restaurant.builder()
 					.id(1234L)
+					.categoryId(1L)
 					.name(restaurant.getName())
 					.address(restaurant.getAddress())
 					.build();
@@ -130,11 +133,9 @@ public class RestaurantControllerTest {
 		
 		mvc.perform(post("/restaurants")
 					.contentType(MediaType.APPLICATION_JSON)		
-					.content("{\"name\":\"\",\"address\":\"\"}")) // Empty인자가 들어왔을때 Status : 400
+					.content("{\"categoryId\":1L,\"name\":\"\",\"address\":\"\"}")) // Empty인자가 들어왔을때 Status : 400
 			.andExpect(status().isBadRequest());
-
 	}
-	
 	
 	@Test
 	public void updateWithValidData() throws Exception {
@@ -150,7 +151,7 @@ public class RestaurantControllerTest {
 	public void updateWithoutName() throws Exception {
 		mvc.perform(patch("/restaurants/1004")
 					.contentType(MediaType.APPLICATION_JSON)
-					.content("{\"name\":\"\",\"address\":\"Busan\"}"))
+					.content("{\"categoryId\":1L,\"name\":\"\",\"address\":\"Busan\"}"))
 			.andExpect(status().isBadRequest());
 		
 	}

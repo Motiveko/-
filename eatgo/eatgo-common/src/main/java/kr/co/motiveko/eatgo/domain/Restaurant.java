@@ -10,6 +10,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,11 @@ public class Restaurant{
 	@GeneratedValue // id값 자동으로 생성
 	@Setter
 	private Long id;
+
+	//Request로 들어올때는 null이어도 괜찮다? 
+	//오히려 NotEmpty면 Request때도 입력해줘야한다
+	@NotNull 
+	private Long categoryId;
 	
 	@NotEmpty
 	private String name;
