@@ -9,9 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //이 때 자기 디렉토리까지 다시 써줘야함
 @SpringBootApplication
 public class EatgoCustomerApiApplication {
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(EatgoCustomerApiApplication.class, args);
 	}
-
 }
