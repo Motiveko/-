@@ -11,7 +11,7 @@ import kr.co.motiveko.eatgo.domain.RegionRepository;
 @Service
 public class RegionService {
 
-	@Autowired
+	
 	private RegionRepository regionRepository;
 
 	public RegionService(RegionRepository regionRepository) {

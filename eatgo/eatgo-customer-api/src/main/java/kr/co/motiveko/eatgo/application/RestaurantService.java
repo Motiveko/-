@@ -18,17 +18,13 @@ import kr.co.motiveko.eatgo.domain.ReviewRepository;
 @Service
 public class RestaurantService {
 	
-	@Autowired
 	private RestaurantRepository restaurantRepository;
 	
-	@Autowired
 	private MenuItemRepository menuItemRepository;
 
-	@Autowired
 	private ReviewRepository reviewRepository;
 	
-	// @Autowired 한걸 왜 이렇게 했는지 기억이 나질 않는다.. --> Testclass에서 repository는 autowired되지 않기때문에 테스트하려면 이런식으로 넣어줘야한다.
-	// 이 생성자는 테스트클래스에서 쓰려고하는거나 다름없다!
+	// 테스트를 위하여
 	public RestaurantService(RestaurantRepository restaurantRepository, 
 								MenuItemRepository menuItemReposiory,
 								 ReviewRepository reviewRepository) {

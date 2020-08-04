@@ -1,9 +1,12 @@
 package kr.co.motiveko.eatgo;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 // spring core에서도 배웠던 @configuration 
 @Configuration
@@ -20,7 +23,11 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter { //상속!
 		http.cors().disable();	//cross origin~~
 		
 		http.headers().frameOptions().disable();
-			
 	}
-
+	
+	//UserService에서 사용할 빈!
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

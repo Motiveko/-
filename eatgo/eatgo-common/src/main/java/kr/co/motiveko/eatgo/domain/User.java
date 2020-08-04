@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,6 +47,13 @@ public class User {
 
 	public void deactive() {
 		level = 0L;
+	}
+
+	// Json으로 주지 말자 필요없으니까!
+	@JsonIgnore 
+	public String getAccessToken() {
+		if(password==null) return "";
+		return password.substring(0,10);
 	}
 
 }

@@ -20,5 +20,16 @@ public class UserTest {
 	
 	}
 	
+	@Test
+	public void accessTokenWithPassword() {
+		User user = User.builder().password("ACCESSTOKEN").build();
+		assertThat(user.getAccessToken(), is("ACCESSTOKE"));
+	}
+	
+	@Test
+	public void accessTokenWithoutPassword() {
+		User user = User.builder().build();
+		assertThat(user.getAccessToken(), is(""));	
+	}	
 
 }

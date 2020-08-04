@@ -32,7 +32,7 @@ public class Restaurant{
 
 	//Request로 들어올때는 null이어도 괜찮다? 
 	//오히려 NotEmpty면 Request때도 입력해줘야한다
-	@NotNull
+//	@NotNull
 	private Long categoryId;
 	
 	@NotEmpty

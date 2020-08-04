@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +14,15 @@ import kr.co.motiveko.eatgo.domain.UserRepository;
 @Transactional
 public class UserService {
 
-	@Autowired
 	UserRepository userRepository;
+	PasswordEncoder passwordEncoder;
 	
-	public UserService(UserRepository repository) {
+	//  Implicit Constructor Injection! -> constructor만 있으면  @Autowired가 필요가 없다.
+	public UserService(UserRepository repository,PasswordEncoder passwordEncoder) {
 		this.userRepository = repository;
+		this.passwordEncoder = passwordEncoder;
 	}
+	
 	public User registerUser(String email, String name, String password) {
 		// email중복 방지
 		Optional<User> existed= userRepository.findByEmail(email);
@@ -31,7 +32,6 @@ public class UserService {
 		
 		// 암호화
 		// PasswordEncoder :: interface, BCryptPasswordEncoder :: 구현체		
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedePassword = passwordEncoder.encode(password);
 				
 		User user = User.builder()
@@ -42,5 +42,18 @@ public class UserService {
 						.build();
 		return userRepository.save(user);
 	}
-
+	public User authenticate(String email, String password) {
+		
+		User user = userRepository.findByEmail(email)
+				.orElseThrow(() -> new EmailNotExistedException(email));
+		
+		//  패스워드 일치하지 않는 경우 체크
+					//matches도 mocking을 해줘야한다
+		if(!passwordEncoder.matches(password, user.getPassword())) {			
+			throw new PasswordWrongException();
+		}
+		
+		return user;
+	}
+	
 }
