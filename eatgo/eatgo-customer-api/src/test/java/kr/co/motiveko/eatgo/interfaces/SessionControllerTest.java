@@ -1,5 +1,4 @@
 package kr.co.motiveko.eatgo.interfaces;
-
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -7,7 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.hamcrest.Matchers.containsString;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import kr.co.motiveko.eatgo.application.EmailNotExistedException;
 import kr.co.motiveko.eatgo.application.PasswordWrongException;
 import kr.co.motiveko.eatgo.application.UserService;
 import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.utils.JwtUtil;
 
 
 @RunWith(SpringRunner.class) // spring runner를 이용해서 테스트한다.
@@ -33,6 +33,8 @@ public class SessionControllerTest {
 	@MockBean
 	private UserService userService;
 	
+	@MockBean
+	private JwtUtil jwtUtil;
 	
 	// authentication Valid
 	@Test
@@ -40,17 +42,21 @@ public class SessionControllerTest {
 		
 		String email = "tester@example.com";
 		String password = "test";
+		Long id = 1004L;
+		String name = "Tester";
 		
-		User mockUser = User.builder().password("ACCESSTOKEN").build();
+		User mockUser = User.builder().id(id).name(name).build();
 		given(userService.authenticate(email, password)).willReturn(mockUser);
+		given(jwtUtil.createToken(id, name)).willReturn("header.payload.signature");
 		
 		mvc.perform(post("/session")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content("{\"email\":\"tester@example.com\",\"name\":\"Tester\",\"password\":\"test\"}"))
 			.andExpect(status().isCreated())
 			.andExpect(header().string("location","/session"))
-			.andExpect(content().string("{\"accessToken\":\"ACCESSTOKE\"}"));
-	
+			.andExpect(content().string(containsString("{\"accessToken\":\"header.payload.signature\"}")))
+			.andExpect(content().string(containsString(".")));
+			
 		verify(userService).authenticate(eq(email),eq(password));
 	}	
 	
@@ -76,13 +82,11 @@ public class SessionControllerTest {
 		given(userService.authenticate("tester@example.com", "x"))
 			.willThrow(PasswordWrongException.class);
 
-		
 		mvc.perform(post("/session")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content("{\"email\":\"tester@example.com\",\"name\":\"Tester\",\"password\":\"x\"}"))
 			.andExpect(status().isBadRequest());
-		
-	
+			
 		verify(userService).authenticate(eq("tester@example.com"),eq("x"));
 	}		
 }

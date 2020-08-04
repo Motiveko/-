@@ -48,12 +48,13 @@ public class User {
 	public void deactive() {
 		level = 0L;
 	}
-
+	
+	//JWT UTIL이 생겼으므로 지운다!
 	// Json으로 주지 말자 필요없으니까!
-	@JsonIgnore 
-	public String getAccessToken() {
-		if(password==null) return "";
-		return password.substring(0,10);
-	}
+//	@JsonIgnore 
+//	public String getAccessToken() {
+//		if(password==null) return "";
+//		return password.substring(0,10);
+//	}
 
 }

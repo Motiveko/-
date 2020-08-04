@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import kr.co.motiveko.eatgo.application.UserService;
 import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.utils.JwtUtil;
 
 
 @RunWith(SpringRunner.class) // spring runner를 이용해서 테스트한다.
@@ -30,7 +31,7 @@ public class UserControllerTest {
 	
 	@MockBean
 	private UserService userService;
-	
+
 	@Test
 	public void createWithValidAttributes() throws Exception {
 		

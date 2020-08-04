@@ -315,8 +315,23 @@ Validation
 
 
 
+JWT
+	https://jwt.io/
+	Json Web Tokens -> Json포맷을 이용해서 웹에서 활용할 수 있는 AccessToken을 다루는 표준
+	우리가 한거보다 훨씬 더 유의미하고 적절한 데이터를 가진 토큰! 표준이다!
+	3Part - > 
+		Header(형식 등), 
+		Payload(데이터들 : Claims, id,emaile등과 토큰유효기간등이 담긴다. 우리는 유효기간 안담지만 실제로는 무조건 담는다!
+			 암호화 안되므로 노출되면 안되는 데이터를 담으면 안된다, 가능한 적게담으자), 
+		Signature(위변조 안되있음을 증명하는 서명, 해싱(sigining)한 후 값을 대조하는방식(verification).)
+	Base64Encoding을 이용해서 전체 데이터를 일정한 문자열로 바꾸고 .로 연결되있다.
+	HMAC-SHA256(HS-256) 해싱 방법을 이용해 signiture를 만든다. 비밀키를 정하고 잘 간직해야한다. 노출되면 남들이 똑같은 서명을 만들 수 잇따 ㅜ
 
 
+	jjwt ::  https://github.com/jwtk/jjwt
+	 - securityJavaConfig에다가 Bean생성
+	 - secret값은 application.yml에 선언해놓는다
+	 - @Value("${jwt.secret}") Annotation으로 받아와서 빈을 생성할 때 넣어준
 
 Eatgo 구현을 위해 필요한 추가 기술
 	- Google maps API 

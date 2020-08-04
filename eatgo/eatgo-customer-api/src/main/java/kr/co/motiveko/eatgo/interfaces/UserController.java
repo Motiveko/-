@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.motiveko.eatgo.application.UserService;
 import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.utils.JwtUtil;
 
 @RestController
 public class UserController {
