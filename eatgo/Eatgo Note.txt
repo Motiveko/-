@@ -331,7 +331,30 @@ JWT
 	jjwt ::  https://github.com/jwtk/jjwt
 	 - securityJavaConfig에다가 Bean생성
 	 - secret값은 application.yml에 선언해놓는다
-	 - @Value("${jwt.secret}") Annotation으로 받아와서 빈을 생성할 때 넣어준
+	 - @Value("${jwt.secret}") Annotation으로 받아와서 빈을 생성할 때 넣어준다
+
+
+인가
+	Authorization   <-- Authentication
+	Stateless( 상태유지 하지 않는다) -> 요청 들어올때마다 accesstoken만든다
+	HTTPHeader으로 전달, {Authorization: Bearer Token...}
+
+	Filter (BasicAuthenticationFilter) - 모든 요청에 대해 authentication
+		-> SecurityConfig 에서 configure()에 설정한다.
+		-> .addFilter(filter), .and()는 HttpSecurity에 걸어야하는거라서 그렇다. headers()를하면 HeadersConfigure에 설정하는중
+		   		 	걍 http.addFilter(filter) 해줘도 된다.
+
+
+	AuthenticationToken(스프링 내부에서만 사용되는 Token) - UsernamePasswordAuthenticationToken
+	AbstractAuthenticationToken
+
+
+
+
+
+
+
+
 
 Eatgo 구현을 위해 필요한 추가 기술
 	- Google maps API 
