@@ -41,19 +41,5 @@ public class UserService {
 						.level(1L) // NotNull!
 						.build();
 		return userRepository.save(user);
-	}
-	public User authenticate(String email, String password) {
-		
-		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new EmailNotExistedException(email));
-		
-		//  패스워드 일치하지 않는 경우 체크
-					//matches도 mocking을 해줘야한다
-		if(!passwordEncoder.matches(password, user.getPassword())) {			
-			throw new PasswordWrongException();
-		}
-		
-		return user;
-	}
-	
+	}	
 }
