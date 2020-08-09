@@ -23,14 +23,10 @@ public class JwtUtil {
 				.signWith(key,  SignatureAlgorithm.HS256)
 				.compact();
 	}
-
 	public Claims getClaims(String token) {
 		return Jwts.parser()
 					.setSigningKey(key)
 					.parseClaimsJws(token)   // Jws : sign이 포함된 jwt
 					.getBody();
 	}
-	
-
-	
 }

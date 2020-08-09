@@ -321,7 +321,7 @@ JWT
 	우리가 한거보다 훨씬 더 유의미하고 적절한 데이터를 가진 토큰! 표준이다!
 	3Part - > 
 		Header(형식 등), 
-		Payload(데이터들 : Claims, id,emaile등과 토큰유효기간등이 담긴다. 우리는 유효기간 안담지만 실제로는 무조건 담는다!
+		Payload(데이터들 : Claims- id,emaile등과 토큰유효기간등이 담긴다. 우리는 유효기간 안담지만 실제로는 무조건 담는다!
 			 암호화 안되므로 노출되면 안되는 데이터를 담으면 안된다, 가능한 적게담으자), 
 		Signature(위변조 안되있음을 증명하는 서명, 해싱(sigining)한 후 값을 대조하는방식(verification).)
 	Base64Encoding을 이용해서 전체 데이터를 일정한 문자열로 바꾸고 .로 연결되있다.
@@ -349,10 +349,18 @@ JWT
 	AbstractAuthenticationToken
 
 
+	JwtAuthenticationFilter에서 context에 setAuthentication을 해준다. 이를 취득해서 Addreview시 이름을 입력하지 않아도
+	authentication에서 이름을 가져올 수 있다.
+		-> Controller 단에서 parameter로 Authentication authentication으로 받으면 된다. HttpSession받는거랑 비슷하다.
 
 
+	일단 테스트 시 헤더에 인위적으로 토큰을 넣어준다. .header("Authorization","Bearer " + token) 으로
 
+	httpie로 해볼때도 헤더값을 넣어줄 수 있는데 http POST localhost:8090/restaurants/1/reviews score=5 description="존나맛있어" "Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEwMDQsIm5hbWUiOiJKb2huIn0.8hm6ZOJykSINHxL-rf0yV882fApL3hyQ9-WGlJUyo2A"
+	이런식으로 "key:value"를 그냥 써주면 헤더로 들어간다.
 
+	이런식으로 AuthToken에 name외에도 다양한 값을 넣어서 api들에서 활용할 수 있다.
+	
 
 
 

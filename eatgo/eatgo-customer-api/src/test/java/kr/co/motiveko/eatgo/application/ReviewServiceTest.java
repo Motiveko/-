@@ -1,6 +1,7 @@
 package kr.co.motiveko.eatgo.application;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.BDDMockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +26,9 @@ public class ReviewServiceTest {
 	}
 
 	@Test
-	public void addReview() {
-		
-		Review review = Review.builder()
-								.name("motiveko")
-								.score(3)
-								.description("good")
-								.build();
-		
-		reviewService.addReview(1004L,review);
-		
-		//
-		verify(ReviewRepository).save(review);
+	public void addReview() {	
+		reviewService.addReview(1004L,"motiveko",3,"good");
+		verify(ReviewRepository).save(any());
 	}
 
 }
