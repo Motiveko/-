@@ -362,6 +362,15 @@ JWT
 	이런식으로 AuthToken에 name외에도 다양한 값을 넣어서 api들에서 활용할 수 있다.
 	
 
+로그인 API 분리!
+	
+	- 로그인 관리는 admin, customer, 그리고 이후에 확장될 api들에서 모두 필요한 기능이다
+	- 따라서 로그인 api는 따로 분리해서 공유한다
+	- 이것이 가능한 이유는 우리가 상태를 가지고 있지 않은(stateless)서버를 개발했기 때문이다!( JWT !)
+	
+	- 로그인 API 2
+		- token에 userId, name외에 restaurantId를 넣어 레스토랑 관리자임을 알려준다!
+		- 식당관리자는 level=50으로 한다.
 
 
 Eatgo 구현을 위해 필요한 추가 기술

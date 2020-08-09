@@ -36,6 +36,9 @@ public class User {
 	private Long level;
 	
 	private String password;
+	
+	// 가게 주인일 경우 자기가게번호
+	private Long restaurantId;
 
 	public boolean isAdmin() {
 		return level>=3;
@@ -47,6 +50,14 @@ public class User {
 
 	public void deactive() {
 		level = 0L;
+	}
+
+	public void setRestaurantId(Long restaurantId) {
+		level = 50L;
+		this.restaurantId = restaurantId;
+	}
+	public boolean isRestaurantOwner() {
+		return level==50;
 	}
 	
 	//JWT UTIL이 생겼으므로 지운다!
