@@ -371,11 +371,14 @@ JWT
 	- 로그인 API 2
 		- token에 userId, name외에 restaurantId를 넣어 레스토랑 관리자임을 알려준다!
 		- 식당관리자는 level=50으로 한다.
+		- 일반 사용자면 token에 restaurantId가 없다.
 
+	
 
 Eatgo 구현을 위해 필요한 추가 기술
 	- Google maps API 
 		- 다중 마커
+	- Db ( Mysql or Oracle ) , -> Spring boot 설정
 	- Amazon AWS EC2(배포)
 	- Bootstrap
 	- database :: MySQL or Oracle
