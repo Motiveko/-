@@ -398,4 +398,6 @@ Eatgo -> 맛집 지도 구현을 위해 필요한 추가 기술
 	- Db ( Mysql or Oracle ) , -> Spring boot 설정
 	- Amazon AWS EC2(배포)
 	- Bootstrap
-	- database :: MySQL or Oracle
+	- database :: MySQL or Oracle , 
+		- Oracle : https://jjiiinn.tistory.com/30 , db까지 새로하면 넘오래걸리므로 최대한 oracle로 가보잣!
+		- MySql 은 방식이 좀 달라서 공부해야할듯..!
