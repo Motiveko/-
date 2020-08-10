@@ -34,6 +34,7 @@ public class ReviewController {
 		Claims claims = (Claims) authentication.getPrincipal();
 		String name = claims.get("name", String.class);
 		
+		
 		Integer score = resource.getScore();
 		String description = resource.getDescription();
 		

@@ -231,6 +231,8 @@ Validation
 	강사는 run config에 gradle내에 환경변수 설정에다가 SPRING_PROFILES_ACTIVE=test를 써줬는데 이클립스에는 그딴게없다 ㅡㅜ
 
 
+
+
 가게목록 필터링
 	지역별, 종류별( Regions, Categories)
 					
@@ -372,6 +374,20 @@ JWT
 		- token에 userId, name외에 restaurantId를 넣어 레스토랑 관리자임을 알려준다!
 		- 식당관리자는 level=50으로 한다.
 		- 일반 사용자면 token에 restaurantId가 없다.
+
+
+
+테이블 예약
+	Table Reservation
+	- eatgo-restaurant-api, eato-customer-api
+	- Domain : Reservation( userId, name, date, time, partSize )
+	- POST, /restaurants/{restaurantId}/reservations
+		-> /restaurants/{restaurantId}/reservations/{reservationId}
+
+	- 예약한 레스토랑은 url에 포함되고 예약자는 Authentication에서 받아온다.
+	- 이외의 정보들은 사용자가 입력해서 @ResponseBody로 받는다.
+
+
 
 	
 
