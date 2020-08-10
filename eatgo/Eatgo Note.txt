@@ -391,7 +391,8 @@ JWT
 
 	
 
-Eatgo 구현을 위해 필요한 추가 기술
+Eatgo -> 맛집 지도 구현을 위해 필요한 추가 기술
+	- Reservation domain 수정( date등이 String이다. 그리고 field들에 대한 validation역시 추가되야할듯)
 	- Google maps API 
 		- 다중 마커
 	- Db ( Mysql or Oracle ) , -> Spring boot 설정
