@@ -33,7 +33,6 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter { //상속!
 		Filter filter = 
 				new JwtAuthenticationFilter(authenticationManager(), jwtUtil());
 		
-		
 		//로그인 폼을 없애줄것이다!, 이외에도 여러가지 disable 가능하다.
 		http.formLogin().disable();
 		// 이런것들 보안에서 중요하나 restAPI를 만들때에는 API Server에서는 불필요하므로 disable시킨다.

@@ -1,11 +1,14 @@
 package kr.co.motiveko.eatgo.application;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import kr.co.motiveko.eatgo.domain.Reservation;
 import kr.co.motiveko.eatgo.domain.ReservationRepository;
 
 @Service
+@Transactional
 public class ReservationService {
 
 	private ReservationRepository reservationRepository;

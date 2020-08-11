@@ -386,12 +386,27 @@ JWT
 
 	- 예약한 레스토랑은 url에 포함되고 예약자는 Authentication에서 받아온다.
 	- 이외의 정보들은 사용자가 입력해서 @ResponseBody로 받는다.
+	
+	- eatgo-restaurant-api 구현, 이를 통해서 레스토랑의 주인은 자신의 가게에 들어온 reservaitons를 받아올 수 있다
+	- 역시 Authorization에 들어있는 token을 활용해서 이용자의 레스토랑id를 가져온다.
+		(현재까지 token에 저장하는 정보 : userId, name, restaurantId(없으면null))
+
+
+
+
+
+
+
+
 
 
 
 	
 
 Eatgo -> 맛집 지도 구현을 위해 필요한 추가 기술
+
+	- accessToken발급해서 response Body로 넘어오는것까진 했는데 이거를 매 request마다 authorization에 담는 방법을 모르겠다.
+	
 	- Reservation domain 수정( date등이 String이다. 그리고 field들에 대한 validation역시 추가되야할듯)
 	- Google maps API 
 		- 다중 마커
