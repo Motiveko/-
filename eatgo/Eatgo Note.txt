@@ -388,20 +388,51 @@ JWT
 	- 이외의 정보들은 사용자가 입력해서 @ResponseBody로 받는다.
 	
 	- eatgo-restaurant-api 구현, 이를 통해서 레스토랑의 주인은 자신의 가게에 들어온 reservaitons를 받아올 수 있다
-	- 역시 Authorization에 들어있는 token을 활용해서 이용자의 레스토랑id를 가져온다.
-		(현재까지 token에 저장하는 정보 : userId, name, restaurantId(없으면null))
+	- 역시 Authorization에 들어있는 jwt token을 활용해서 이용자의 레스토랑id를 가져온다.
+		(현재까지 jwt token에 저장하는 정보 : userId, name, restaurantId(없으면null))
 
 
 
 
 
+한번꺼번에 실행하기
+	- Container 기술 :: 하나의 컴퓨터 안에서 가상화된 여러개의 컨테이너를 올려서 여러개의 서버를 동시에 실행할 수 있다
+		- DOCKER!
+		- Multi Api Servers
+		- Front-End
+		- MySQL, Oracle...
+	
+	- Docker 설치
+	- eatgo에 docker-compose.yml 추가( 소스코드에서 복사해서 가져왔다)
+	- eatgo에 .env 추가( datasource같은거다, 근데 Project Explorer에서 안보인다, 파일 디렉토리에서 숨김파일 보이기하면 보인다.)
+	- eatgo에 run.sh 추가 ( spring boot app들을 모두 실행시킬텐데 mysql시작 전에 시작되면 db연결을 하지 못해 실패할 수 있다. 이를 위해 될때까지 반복하게 해놨다)
 
+	- 시바 뭔지 모르겠다...
+	- eatgo에 가서 docker-compose up 하면 docker-compose.yml을 보고 실행을한다!?
+	- 근데 그 전에 jar파일들을 만들어놔야하는데 chmod +x gradlew   로 gradlew에 대한 보안설정? 을 하고 ./gradlew bootJar 하면 jar파일이 생성된다 그 뒤 docker!
 
+	- docker-compose ps 로 보면 실행중인거 보인다.(terminal 새거 띄워서 해야한다)
+	
+	- 실행중인 창에서 ctrl+c 하면 종료한다.
 
+	- 각각의 api-web은 소스코드 가져왓따. vue.js기반으로 만든것같다.
 
+	- build.gradle에 mysql관련 dependency설정
 
+	- mysql을 쓸 수 있게 application.yml에 mysql관련 내용 넣음
+		- @Value 와 비슷하게 ${key} 형식으로 쓰는데 가져오는곳이 .env이다.
+		- .env에 active-profile에 mysql이 되어있기때문에 mysql을 쓸 수 있게된다.
 
 	
+	frontend가 안돌아간다 씨부럴..
+
+	- https://github.com/ahastudio/fastcampus-eatgo/issues/36 에 mysql access denied 해결방안이 나와있다. 뭔말인진 몰것다
+
+
+
+
+
+
 
 Eatgo -> 맛집 지도 구현을 위해 필요한 추가 기술
 
