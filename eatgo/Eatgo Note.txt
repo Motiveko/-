@@ -430,7 +430,17 @@ JWT
 
 
 
+	회고
 
+	REST API :: CRUD를 http의 method를 이용해서 한다 아 뭔지알겠다 똑같은 /restaurants라도 method에 따라 crud 기능이 달라진다는말인갑다!!!!!!!!!!!
+
+	MultiProject의 이점과 이를 어떻게 실행했는가? -> 이점모름, 
+
+	TDD ( 기능을 생각하고 그스펙을 testcode를 작성해서 돌려본다), 대규모 변경이 있을 때 문제없이 변경이 가능하다.
+
+	Layered Architecture :: UI-controller, APP-service, Domain-domain, Infrastructure-
+
+	JPA 를 활용한 영속화
 
 
 
