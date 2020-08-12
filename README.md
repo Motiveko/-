@@ -8,7 +8,7 @@
   > webpack
 
 #### back-end 
-  > spring boot, spring data jpa, spring security, jjwt, lombok, etc.
+  > spring boot, spring data jpa, spring security, jjwt, lombok, junit, etc.
 
 #### database 
   > h2 database, mysql
