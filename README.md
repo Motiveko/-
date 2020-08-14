@@ -5,7 +5,7 @@
 
 사용된 기술
 #### front-end 
-  > webpack
+  > webpack, vue.js
 
 #### back-end 
   > spring boot, spring data jpa, spring security, jjwt, lombok, junit, etc.
