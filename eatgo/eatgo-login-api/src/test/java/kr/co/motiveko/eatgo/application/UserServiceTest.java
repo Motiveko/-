@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import kr.co.motiveko.eatgo.application.EmailNotExistedException;
 import kr.co.motiveko.eatgo.application.PasswordWrongException;
 import kr.co.motiveko.eatgo.application.UserService;
-import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.domain.EatgoUser;
 import kr.co.motiveko.eatgo.domain.UserRepository;
 
 public class UserServiceTest {
@@ -44,13 +44,13 @@ public class UserServiceTest {
 		String password = "test";		
 
 		
-		User mockUser = User.builder().email(email).build();
-		given(userRepository.findByEmail(email)).willReturn(Optional.of(mockUser ));
+		EatgoUser mockUser = EatgoUser.builder().userEmail(email).build();
+		given(userRepository.findByUserEmail(email)).willReturn(Optional.of(mockUser ));
 		given(passwordEncoder.matches(any(),any())).willReturn(true);
 		
-		User user = userService.authenticate(email, password);
+		EatgoUser user = userService.authenticate(email, password);
 		
-		assertThat(user.getEmail(), is(email));		
+		assertThat(user.getUserEmail(), is(email));		
 	}
 
 	// 이메일 없는 authentication
@@ -60,7 +60,7 @@ public class UserServiceTest {
 		String email = "x";
 		String password = "test";		
 		
-		given(userRepository.findByEmail(email)).willReturn(Optional.empty());
+		given(userRepository.findByUserEmail(email)).willReturn(Optional.empty());
 		
 		userService.authenticate(email, password);
 	}
@@ -72,8 +72,8 @@ public class UserServiceTest {
 		String email = "test@example.com";
 		String password = "test";		
 		
-		User mockUser = User.builder().email(email).build();
-		given(userRepository.findByEmail(email)).willReturn(Optional.of(mockUser));
+		EatgoUser mockUser = EatgoUser.builder().userEmail(email).build();
+		given(userRepository.findByUserEmail(email)).willReturn(Optional.of(mockUser));
 		given(passwordEncoder.matches(any(),any())).willReturn(false);
 		
 //		given(passwordEncoder.matches(password, encodedPassword))

@@ -1,16 +1,27 @@
 server:
   port: 8090
   
-spring:
-  datasource:
-    url: jdbc:h2:~/data/eatgo
-  jpa: 
-    hibernate:
-      ddl-auto: update
-    
---- 
+#spring:
+#  datasource:
+#    url: jdbc:h2:~/data/eatgo
+#  jpa: 
+#    hibernate:
+#      ddl-auto: update
+#    
+#--- 
+#
+#spring:
+#  profiles: test
+#  datasource:#    url: jdbc:h2:mem:test
+#    
+#---
 
 spring:
-  profiles: test
-  datasource:    url: jdbc:h2:mem:test
-    
+#  profiles: oracle
+  datasource:
+    url: jdbc:oracle:thin:@127.0.0.1:49161:XE 
+    username: MOTIVEKO
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update    

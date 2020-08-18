@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import kr.co.motiveko.eatgo.application.UserService;
-import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.domain.EatgoUser;
 import kr.co.motiveko.eatgo.utils.JwtUtil;
 
 
@@ -39,11 +39,11 @@ public class UserControllerTest {
 		String email = "test@example.com";
 		String name = "Tester";
 		String password = "test";
-		User mockUser = User.builder()
-						.id(1004L)
-						.email(email)
-						.name(name)
-						.password(password)
+		EatgoUser mockUser = EatgoUser.builder()
+						.userId(1004L)
+						.userEmail(email)
+						.userName(name)
+						.userPassword(password)
 						.build();				
 		given(userService.registerUser(email,name,password))
 				.willReturn(mockUser);
@@ -51,7 +51,7 @@ public class UserControllerTest {
 		
 		mvc.perform(post("/users")
 					.contentType(MediaType.APPLICATION_JSON)
-					.content("{\"email\":\"test@example.com\",\"name\":\"Tester\",\"password\":\"test\"}"))
+					.content("{\"userEmail\":\"test@example.com\",\"userName\":\"Tester\",\"userPassword\":\"test\"}"))
 			.andExpect(status().isCreated())
 			.andExpect(header().string("location","/users/1004"));
 	

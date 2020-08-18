@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.motiveko.eatgo.application.UserService;
-import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.domain.EatgoUser;
 import kr.co.motiveko.eatgo.utils.JwtUtil;
 
 @RestController
@@ -29,12 +29,12 @@ public class SessionController {
 		String email = resource.getEmail();
 		String password = resource.getPassword();
 		
-		User user = userService.authenticate(email, password);
+		EatgoUser user = userService.authenticate(email, password);
 		
 		// user가 restaurantOwner이면 restaurantId도 같이넘긴다.
 		String accessToken = jwtUtil.createToken(
-									user.getId(),
-									user.getName(),
+									user.getUserId(),
+									user.getUserName(),
 									user.isRestaurantOwner() ? user.getRestaurantId() : null); 
 		String url = "/session";
 		

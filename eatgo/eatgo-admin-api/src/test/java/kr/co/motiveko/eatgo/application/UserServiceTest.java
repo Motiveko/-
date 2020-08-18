@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.configuration.MockAnnotationProcessor;
 
-import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.domain.EatgoUser;
 import kr.co.motiveko.eatgo.domain.UserRepository;
 
 public class UserServiceTest {
@@ -34,18 +34,18 @@ public class UserServiceTest {
 	
 	@Test
 	public void getUsers() {
-		List<User> mockUsers = new ArrayList<>();
-		mockUsers.add(User.builder()
-					.email("test@example.com")
-					.name("motiveko")
-					.level(3L)
+		List<EatgoUser> mockUsers = new ArrayList<>();
+		mockUsers.add(EatgoUser.builder()
+					.userEmail("test@example.com")
+					.userName("motiveko")
+					.userLevel(3L)
 					.build());
 		given(userRepository.findAll()).willReturn(mockUsers);
 		
-		List<User> users = userService.getUsers();
-		User user = users.get(0);
+		List<EatgoUser> users = userService.getUsers();
+		EatgoUser user = users.get(0);
 		
-		assertThat(user.getName(), is("motiveko"));
+		assertThat(user.getUserName(), is("motiveko"));
 	}
 	
 	@Test
@@ -54,14 +54,14 @@ public class UserServiceTest {
 		String email = "admin@example.com";
 		String name = "Administrator";
 				
-		User mockUser = User.builder().email(email).name(name).build();
+		EatgoUser mockUser = EatgoUser.builder().userEmail(email).userName(name).build();
 		
 		given(userRepository.save(any())).willReturn(mockUser);
 		
-		User user = userService.addUser(email, name);
+		EatgoUser user = userService.addUser(email, name);
 		
-		assertThat(user.getEmail(), is(email));
-		assertThat(user.getName(), is(name));
+		assertThat(user.getUserEmail(), is(email));
+		assertThat(user.getUserName(), is(name));
 	}
 	
 	@Test
@@ -73,18 +73,18 @@ public class UserServiceTest {
 		Long level = 100L;
 		
 		
-		User mockUser = User.builder()
-				.id(id)
-				.email(email)
-				.name("Administrator").build();
+		EatgoUser mockUser = EatgoUser.builder()
+				.userId(id)
+				.userEmail(email)
+				.userName("Administrator").build();
 		
 		given(userRepository.findById(any())).willReturn(Optional.of(mockUser));
 		
-		User user = userService.updateUser(id,email, name, level);
+		EatgoUser user = userService.updateUser(id,email, name, level);
 
 		verify(userRepository).findById(eq(id));
 
-		assertThat(user.getName(),is("Superman"));
+		assertThat(user.getUserName(),is("Superman"));
 		assertThat(user.isAdmin(), is(true));
 	}
 	
@@ -92,10 +92,10 @@ public class UserServiceTest {
 	public void deactiveUser() {
 		
 		Long id= 1004L;
-		User mockUser = User.builder().id(id).level(100L).build();
+		EatgoUser mockUser = EatgoUser.builder().userId(id).userLevel(100L).build();
 		given(userRepository.findById(id)).willReturn(Optional.of(mockUser));
 		
-		User user = userService.deactiveUser(id);
+		EatgoUser user = userService.deactiveUser(id);
 		verify(userRepository).findById(id);
 	
 		assertThat(user.isAdmin(), is(false));

@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import kr.co.motiveko.eatgo.application.EmailNotExistedException;
 import kr.co.motiveko.eatgo.application.PasswordWrongException;
 import kr.co.motiveko.eatgo.application.UserService;
-import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.domain.EatgoUser;
 import kr.co.motiveko.eatgo.utils.JwtUtil;
 
 
@@ -46,7 +46,7 @@ public class SessionControllerTest {
 		Long id = 1004L;
 		String name = "Tester";
 		
-		User mockUser = User.builder().id(id).name(name).level(1L).build();
+		EatgoUser mockUser = EatgoUser.builder().userId(id).userName(name).userLevel(1L).build();
 		given(userService.authenticate(email, password)).willReturn(mockUser);
 		given(jwtUtil.createToken(id, name, null)).willReturn("header.payload.signature");
 		
@@ -69,7 +69,7 @@ public class SessionControllerTest {
 		Long id = 1004L;
 		String name = "Tester";
 		
-		User mockUser = User.builder().id(id).name(name).level(50L).restaurantId(369L).build();
+		EatgoUser mockUser = EatgoUser.builder().userId(id).userName(name).userLevel(50L).restaurantId(369L).build();
 		given(userService.authenticate(email, password)).willReturn(mockUser);
 		given(jwtUtil.createToken(id, name, 369L)).willReturn("header.payload.signature");
 		

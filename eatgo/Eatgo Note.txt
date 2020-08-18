@@ -20,7 +20,7 @@ Spring Data Jpa
 
 FrontEnd
 	eatgo-api처럼 디렉토리를 분리해서 eatgo-web directory 생성
-	node.js설치 후 npm을 이용, npm init 으로 프로젝트 패키지? 생성, json형식으로 되어 있다.
+	node.js설치 후 npm을 이용, npm init 으로 프로젝트 패키지? 생성, json형식으로 되어 있다.f
 	서버로 사용하는것은 webpack의 webpack-dev-server
 	설치는 npm install --save-dev webpack webpack-cli webpack-dev-server 를 terminal에 입력해서 설치
 	설치하면 package.js에 관련 dependencies가 입력되고, package-lock.json과 node_modules 생성함

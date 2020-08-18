@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.domain.EatgoUser;
 import kr.co.motiveko.eatgo.domain.UserRepository;
 
 public class UserServiceTest {
@@ -43,7 +43,7 @@ public class UserServiceTest {
 		String name = "Tester";
 		String password = "test";
 		
-		User user = userService.registerUser(email,name,password);
+		EatgoUser user = userService.registerUser(email,name,password);
 		
 		verify(userRepository).save(any());
 	}
@@ -55,10 +55,10 @@ public class UserServiceTest {
 		String name = "Tester";
 		String password = "test";
 		
-		User mockUser = User.builder().build();
-		given(userRepository.findByEmail(email)).willReturn(Optional.of(mockUser));
+		EatgoUser mockUser = EatgoUser.builder().build();
+		given(userRepository.findByUserEmail(email)).willReturn(Optional.of(mockUser));
 		
-		User user = userService.registerUser(email,name,password);
+		EatgoUser user = userService.registerUser(email,name,password);
 		
 		verify(userRepository, never()).save(any());
 	}

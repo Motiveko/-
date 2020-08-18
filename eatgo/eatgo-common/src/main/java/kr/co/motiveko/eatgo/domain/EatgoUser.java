@@ -20,44 +20,44 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+public class EatgoUser {
+	// User -> EatgoUser로 테이블명 변경, Oracle에서 User 테이블은 만들 수 없다.
 	@Id
 	@GeneratedValue
-	private Long id;
+	private Long userId;
 	
 	@NotEmpty
-	private String email;
+	private String userEmail;
 	
 	@NotEmpty
-	private String name;
+	private String userName;
 	
 	@NotNull
-	private Long level;
+	private Long userLevel;
 	
-	private String password;
+	private String userPassword;
 	
 	// 가게 주인일 경우 자기가게번호
 	private Long restaurantId;
 
 	public boolean isAdmin() {
-		return level>=3;
+		return userLevel>=3;
 	}
 
 	public boolean isActive() {
-		return level>0;
+		return userLevel>0;
 	}
 
 	public void deactive() {
-		level = 0L;
+		userLevel = 0L;
 	}
 
 	public void setRestaurantId(Long restaurantId) {
-		level = 50L;
+		userLevel = 50L;
 		this.restaurantId = restaurantId;
 	}
 	public boolean isRestaurantOwner() {
-		return level==50;
+		return userLevel==50;
 	}
 	
 	//JWT UTIL이 생겼으므로 지운다!

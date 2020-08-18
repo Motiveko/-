@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.motiveko.eatgo.application.UserService;
-import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.domain.EatgoUser;
 import kr.co.motiveko.eatgo.utils.JwtUtil;
 
 @RestController
@@ -23,15 +23,15 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping(value = "/users")
-	public ResponseEntity<?> postMethodName(@RequestBody User resource) 
+	public ResponseEntity<?> postMethodName(@RequestBody EatgoUser resource) 
 			throws URISyntaxException {
 		
-		String email = resource.getEmail();
-		String name = resource.getName();
-		String password = resource.getPassword();
+		String email = resource.getUserEmail();
+		String name = resource.getUserName();
+		String password = resource.getUserPassword();	
 		
-		User user = userService.registerUser(email,name,password);
-		String url = "/users/"+user.getId();
+		EatgoUser user = userService.registerUser(email,name,password);
+		String url = "/users/"+user.getUserId();
 	
 		return ResponseEntity.created(new URI(url)).body("{}");
 	}

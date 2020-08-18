@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import kr.co.motiveko.eatgo.application.UserService;
-import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.domain.EatgoUser;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
@@ -34,7 +34,7 @@ public class UserControllerTest {
 	
 	@Test
 	public void list() throws Exception {
-		List<User> users = new ArrayList<>();	
+		List<EatgoUser> users = new ArrayList<>();	
 		given(userService.getUsers()).willReturn(users);
 		
 		mvc.perform(get("/users"))
@@ -48,11 +48,11 @@ public class UserControllerTest {
 		String name = "Administrator";
 		
 		given(userService.addUser(email, name))
-			.willReturn(User.builder().email(email).name(name).build());
+			.willReturn(EatgoUser.builder().userEmail(email).userName(name).build());
 
 		mvc.perform(post("/users")
 					.contentType(MediaType.APPLICATION_JSON)
-					.content("{\"email\":\"admin@example.com\",\"name\":\"Administrator\"}"))
+					.content("{\"userEmail\":\"admin@example.com\",\"userName\":\"Administrator\"}"))
 			.andExpect(status().isCreated());
 		verify(userService).addUser(email,name);
 	}
@@ -65,17 +65,17 @@ public class UserControllerTest {
 		Long level = 100L;
 		
 		given(userService.updateUser(id, email, name, level))
-			.willReturn(User.builder()
-					.id(id)
-					.email(email)
-					.name(name)
-					.level(level).build());
+			.willReturn(EatgoUser.builder()
+					.userId(id)
+					.userEmail(email)
+					.userName(name)
+					.userLevel(level).build());
 		
 		mvc.perform(patch("/users/1004")
 					.contentType(MediaType.APPLICATION_JSON)
-					.content("{\"level\":100,"
-							+ "\"email\":\"admin@example.com\","
-							+ "\"name\":\"Administrator\"}"))
+					.content("{\"userLevel\":100,"
+							+ "\"userEmail\":\"admin@example.com\","
+							+ "\"userName\":\"Administrator\"}"))
 			.andExpect(status().isCreated());
 		verify(userService).updateUser(eq(id),eq(email),eq(name),eq(level));
 	}

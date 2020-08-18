@@ -5,17 +5,17 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-public class UserTest {
+public class EatgoUserTest {
 
 	@Test
 	public void createion() {
 		
-		User user = User.builder()
-					.email("test@example.com")
-					.name("motiveko")
-					.level(3L)
+		EatgoUser user = EatgoUser.builder()
+					.userEmail("test@example.com")
+					.userName("motiveko")
+					.userLevel(3L)
 					.build();
-		assertThat(user.getName(),is("motiveko"));
+		assertThat(user.getUserName(),is("motiveko"));
 		assertThat(user.isAdmin(), is(true));
 		assertThat(user.isActive(), is(true));
 
@@ -26,8 +26,8 @@ public class UserTest {
 	
 	@Test
 	public void restaurantOwner() {
-		User user = User.builder()
-						.level(1L)
+		EatgoUser user = EatgoUser.builder()
+						.userLevel(1L)
 						.build();
 		assertThat(user.isRestaurantOwner(), is(false)); 
 		

@@ -29,6 +29,8 @@ configurations {
 
 repositories {
 	mavenCentral()
+	// oracle 관련
+	mavenLocal()
 }
 
 dependencies {
@@ -38,6 +40,10 @@ dependencies {
 	// database 관련 의존성 추가
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'com.h2database:h2'
+	
+	// 오라클 관련
+	compile ("com.oracle:ojdbc6:11.2.0.4")  
+	
 	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

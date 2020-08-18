@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.motiveko.eatgo.application.UserService;
-import kr.co.motiveko.eatgo.domain.User;
+import kr.co.motiveko.eatgo.domain.EatgoUser;
 
 @RestController
 public class UserController {
@@ -24,31 +24,31 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/users")
-	public List<User> users(){
+	public List<EatgoUser> users(){
 		
-		List<User> users = userService.getUsers();
+		List<EatgoUser> users = userService.getUsers();
 		return users;
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<?> create(@RequestBody User resource) throws URISyntaxException {
+	public ResponseEntity<?> create(@RequestBody EatgoUser resource) throws URISyntaxException {
 		
-		String email = resource.getEmail();
-		String name = resource.getName();
+		String email = resource.getUserEmail();
+		String name = resource.getUserName();
 		
-		User user = userService.addUser(email, name);
-		String url = "/users/"+user.getId();
+		EatgoUser user = userService.addUser(email, name);
+		String url = "/users/"+user.getUserId();
 		return ResponseEntity.created(new URI(url)).body("{}");
 	}
 	
 	@PatchMapping("/users/{userId}")
 	public ResponseEntity<?> updateUser(
 			@PathVariable("userId")Long id,
-			@RequestBody User resource) throws URISyntaxException {
+			@RequestBody EatgoUser resource) throws URISyntaxException {
 		
-		String email = resource.getEmail();
-		String name = resource.getName();
-		Long level = resource.getLevel();
+		String email = resource.getUserEmail();
+		String name = resource.getUserName();
+		Long level = resource.getUserLevel();
 				
 		userService.updateUser(id, email, name, level);
 		

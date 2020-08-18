@@ -28,6 +28,8 @@ configurations {
 
 repositories {
     mavenCentral()
+    // oracle 관련
+	mavenLocal()
 }
 
 dependencies {
@@ -39,6 +41,9 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.10.7'
     runtime 'io.jsonwebtoken:jjwt-impl:0.10.7'
     runtime 'io.jsonwebtoken:jjwt-jackson:0.10.7'
+    
+	// 오라클 관련
+	compile ("com.oracle:ojdbc6:11.2.0.4")  
 
 
     compileOnly 'org.projectlombok:lombok'

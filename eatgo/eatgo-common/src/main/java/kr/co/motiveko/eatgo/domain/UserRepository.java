@@ -5,10 +5,10 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<User, Long> {
-	List<User> findAll();
+public interface UserRepository extends CrudRepository<EatgoUser, Long> {
+	List<EatgoUser> findAll();
 
-	Optional<User> findById(Long id);
+	Optional<EatgoUser> findById(Long userId);
 	
-	Optional<User> findByEmail(String email); 
+	Optional<EatgoUser> findByUserEmail(String email); 
 }
