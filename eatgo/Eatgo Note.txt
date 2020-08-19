@@ -402,17 +402,41 @@ JWT
 
 
 	
+Motive Ko의 Eatgo 구현 노트
+@RequestBody 는 json,xml 형태로 request가 넘어올 때 parameter로 받을 수 있다. 
+@RequestBody는 form의 submit과 같은형태로 들어오는 request에 대해서 그 안의 parameter를 받아오는 역할은 한다. form으로 오는 request는 @RequestBody로 받을수없다.
 
-Eatgo -> 맛집 지도 구현을 위해 필요한 추가 기술
+이러한 문제로 현재 우리가 하는 front - back 나눈 프로젝트에서는 backend에서는 데이만 받고 view에 대한건 관리를 안해야하는거 같다. javascript에서 ajax같은 형태로 backend와 필요한 통신을 하고 데이터를 받으면 그걸 표시를 하던 성공했으면 window.location.href 로 다른페이지로 이동하든 해야하는듯
 
-	- accessToken발급해서 response Body로 넘어오는것까진 했는데 이거를 매 request마다 authorization에 담는 방법을 모르겠다.
-	
-	- Reservation domain 수정( date등이 String이다. 그리고 field들에 대한 validation역시 추가되야할듯)
-	- Google maps API 
-		- 다중 마커
-	- Db ( Mysql or Oracle ) , -> Spring boot 설정
-	- Amazon AWS EC2(배포)
-	- Bootstrap
-	- database :: MySQL or Oracle , 
-		- Oracle : https://jjiiinn.tistory.com/30 , db까지 새로하면 넘오래걸리므로 최대한 oracle로 가보잣!
-		- MySql 은 방식이 좀 달라서 공부해야할듯..!
+
+ajax로 넘겨줄 때 그냥 object로 넘겨주면 json으로 못받는거같고 씨발꺼 이 object를 JSON.stringify()해서 넘겨줘야 알아먹는다. "key":"value"여야 한다는 말이다. key:"value"가 아니고 씨발꺼 개씨발
+
+
+
+알아봐야 할 거 : springframework처럼 /index하면 .jsp를 띄워주는 방식을 연구해야할 듯 하다. webpack server를 이용하는 중이니 이를 활용해야할듯. node의 http server라면 가능할듯한데..! webpack 강좌듣기!
+
+
+해야할 일 
+1. 화면기획 및 front디자인 
+2. db필요할 내용들 ( 좌표 등) 설계
+3. 화면 html 구현
+4. webpack강좌 듣기
+5. 기능구현
+6. docker를 이용한 일시작동
+7. heroku에 배포하는 방법에 대한 연구
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

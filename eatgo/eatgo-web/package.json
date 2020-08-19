@@ -7,10 +7,10 @@
   	"start": "webpack-dev-server --port 3000",
     "test": "jest"
   },
-  "author": "Motiveko",
+  "author": "motiveko",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   }
