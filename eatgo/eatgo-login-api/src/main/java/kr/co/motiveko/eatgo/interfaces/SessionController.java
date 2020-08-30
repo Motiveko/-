@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import kr.co.motiveko.eatgo.application.UserService;
 import kr.co.motiveko.eatgo.domain.User;
 import kr.co.motiveko.eatgo.utils.JwtUtil;
 
+@CrossOrigin
 @RestController
 public class SessionController {
 
@@ -37,12 +39,13 @@ public class SessionController {
 									user.getName(),
 									user.isRestaurantOwner() ? user.getRestaurantId() : null); 
 		String url = "/session";
-		
+	
 		// Dto를 만들어서 body에 dto를 넣어주면 자동으로 key:value의 json형식으로 바꿔준다.		
 		return ResponseEntity.created(new URI(url)).body(
 				SessionResponseDto.builder()
 								.accessToken(accessToken)
 								.build());
 	}
+
 
 }

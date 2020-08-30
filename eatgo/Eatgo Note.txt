@@ -431,8 +431,14 @@ ajax로 넘겨줄 때 그냥 object로 넘겨주면 json으로 못받는거같�
 
 
 
+1. loginform 
+https://bootsnipp.com/snippets/X04B0
+ - jquery validator가 사용되어있다. document 참조해서 공부하면 나중에 많이 쓸 수 있을듯
 
-
+jwt에서 막혔다. 어떻게 저장하고 보낼지 알아내기가 힘들다.. 내가 이해못하는듯.
+결국에는 api별로 포트를 나눴는데 이것도 8001:8090 8002:8090 이런식으로 나눠야하는데 이 의미를 잘 모르겠다. 
+이 프로젝트는 완성하기까지 굉장히 험난한 여정이 필요할듯하다..
+webpack - (vue) - spring security 순으로 공부하고 시도해야겠다.
 
 
 

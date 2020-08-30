@@ -25,17 +25,17 @@
 //})();
 
 
-// function getData(callback){
-//     var url2 = "http://localhost:8090/users";
-//     return new Promise(function(resolve, reject) { 
-// 	fetch(url2).then(res=>{
-// 	    //.json도 비동기로 처리해야한다
-// 	    return res.json();
-// 	}).then( response =>{
-// 	    resolve(response);
-// 	})
-//     });
-// }
+ function getData(callback){
+     var url2 = "http://localhost:8090/users";
+     return new Promise(function(resolve, reject) { 
+	 	fetch(url2).then(res=>{
+	 	    //.json도 비동기로 처리해야한다
+	 	    return res.json();
+	 	}).then( response =>{
+	 	    resolve(response);
+	 	})
+     });
+ }
 // getData().then(function(restaurants){
 
 
@@ -69,12 +69,10 @@ $(document).ready(function(){
 			// data[`\"${v.name}\"`] = v.value;
 			data[v.name] = v.value;
 		})
-		
-		// console.log(data);
+		// 씨바 이렇게 stringify해서 "key":"value"로 넘겨줘야합니다 아니면 못알아먹네요씨바
 		var string = JSON.stringify(data);
 		console.log(string);
-		var jsonData = JSON.parse(string);
-		console.log(jsonData);
+
 		$.ajax({
 
 			url: "http://localhost:8090/users",

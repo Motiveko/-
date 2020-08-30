@@ -18,7 +18,7 @@ public class UserService {
 	PasswordEncoder passwordEncoder;
 	
 	//  Implicit Constructor Injection! -> constructor만 있으면  @Autowired가 필요가 없다.
-	public UserService(UserRepository repository,PasswordEncoder passwordEncoder) {
+	public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
 		this.userRepository = repository;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -33,7 +33,7 @@ public class UserService {
 		// 암호화
 		// PasswordEncoder :: interface, BCryptPasswordEncoder :: 구현체		
 		String encodedePassword = passwordEncoder.encode(password);
-				
+
 		User user = User.builder()
 						.email(email)
 						.name(name)

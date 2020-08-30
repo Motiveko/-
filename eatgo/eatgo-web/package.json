@@ -4,8 +4,7 @@
   "description": "EatGo Web Project",
   "main": "src/index.js",
   "scripts": {
-  	"start": "webpack-dev-server --port 3000",
-    "test": "jest"
+     "test": "jest"
   },
   "author": "motiveko",
   "license": "ISC",

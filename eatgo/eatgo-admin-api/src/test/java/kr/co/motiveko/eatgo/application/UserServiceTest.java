@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.configuration.MockAnnotationProcessor;
 
 import kr.co.motiveko.eatgo.domain.User;
 import kr.co.motiveko.eatgo.domain.UserRepository;
