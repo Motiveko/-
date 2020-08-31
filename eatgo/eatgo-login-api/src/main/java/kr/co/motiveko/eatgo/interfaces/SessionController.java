@@ -25,7 +25,7 @@ public class SessionController {
 	private JwtUtil jwtUtil;
 	
 	@PostMapping("/session")						
-	public ResponseEntity<SessionResponseDto> create(@RequestBody SessionRequestDto resource) throws URISyntaxException{
+	public ResponseEntity<?> create(@RequestBody SessionRequestDto resource) throws URISyntaxException{
 		
 		// request된 정보에 대해 Authentication
 		String email = resource.getEmail();
@@ -39,12 +39,13 @@ public class SessionController {
 									user.getName(),
 									user.isRestaurantOwner() ? user.getRestaurantId() : null); 
 		String url = "/session";
-	
-		// Dto를 만들어서 body에 dto를 넣어주면 자동으로 key:value의 json형식으로 바꿔준다.		
-		return ResponseEntity.created(new URI(url)).body(
-				SessionResponseDto.builder()
-								.accessToken(accessToken)
-								.build());
+		return ResponseEntity.created(new URI(url)).header("", "").body("{}");
+		
+//		// Dto를 만들어서 body에 dto를 넣어주면 자동으로 key:value의 json형식으로 바꿔준다.		
+//		return ResponseEntity.created(new URI(url)).body(
+//				SessionResponseDto.builder()
+//								.accessToken(accessToken)
+//								.build());
 	}
 
 
